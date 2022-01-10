@@ -1,0 +1,76 @@
+"가나다".repeat(2) => "가나다가나다" // 문자열 반복
+console.log(`${a} ${b}`) // 문자열 포맷팅
+
+const min = numbers.sort((a, b) => a - b)[0]; // 오름차순
+const max = numbers.sort((a, b) => b - a)[0]; // 내림차순
+// 객체면 (a, b) => a[1]-b[1] 이런 식으로 하기
+
+filter, map, reduce 활용해서 반복문
+
+[1, 2, 3, 4].join(" ") => "1 2 3 4" // 배열을 문자열로
+ "apple banana orange".split(" ") // 문자열을 배열로
+
+ input.length // 배열의 길이
+
+ Object.keys(딕셔너리) => 배열로 변환
+
+ str.padStart(4, "0") => str이 "45" => "0045"
+
+ 배열.shift() 로 앞에 앞배열 지우면서 가면 편함 [1,2,3] 에서 1을 지운다는 뜻
+//근데 이거 너무 느리다
+
+ 조합 라이브러리 없는 듯
+
+const f = [];
+function factorial(n) {
+  if (n == 0 || n == 1) return 1;
+  if (f[n] > 0) return f[n];
+  return (f[n] = factorial(n - 1) * n);
+} // 팩토리얼
+
+사전순 정렬 (a, b) => a < b ? -1 : 1
+
+배열 같은 거 제거하기 const arr = Array.from(new Set(input));
+
+배열은 in 가능, 문자열은 include로 포함하는 것 찾기
+
+let data = new Array(10001).fill(0); // 0으로 초기화한 배열 만들기
+
+스택 큐 덱 => pop, push, shift, unshift, splice로 구현
+
+연속된 배열 만들기 Array(size).fill(start).map((a,b) => (a+b))
+
+베열이 있는 지 없는 지는 length로 확인하기 파이썬 방식처럼 하면 안되는 듯
+
+이진 탐색에서 파라메트릭 서치(최적화 문제는) 반복문(for while)로 풀기
+
+var max = array.reduce( function (previous, current) { 
+	return previous > current ? previous:current;
+}); //최댓값 구하기
+
+set에 has가 있는데 그게 집합에 원소가 있는 지 확인임
+
+Object.value keys entries로 iterable한 객체 순회 가능 
+
+Math.max.apply(null, 배열) 최대값
+
+배열 집합으로 만들기 [...new Set()]
+
+dictionary( {} )는 Object.keys(dic)으로 key가져오고 values로 값 가져오고, Object.keys(dic).length로 길이 구함 
+
+//조합 구현
+const getCombinations = function (arr, selectNumber) {
+  const results = [];
+  if (selectNumber === 1) return arr.map((value) => [value]); // 1개씩 택할 때, 바로 모든 배열의 원소 return
+
+  arr.forEach((fixed, index, origin) => {
+    const rest = origin.slice(index + 1); // 해당하는 fixed를 제외한 나머지 뒤
+    const combinations = getCombinations(rest, selectNumber - 1); // 나머지에 대해서 조합을 구한다.
+    const attached = combinations.map((combination) => [fixed, ...combination]); //  돌아온 조합에 떼 놓은(fixed) 값 붙이기
+    results.push(...attached); // 배열 spread syntax 로 모두다 push
+  });
+
+  return results; // 결과 담긴 results return
+}
+
+배열의 모든 값이 같은 지 확인 // arr.every(v => v=== arr[0]) or arr.reduce((a,b) => return (a===b) ? true : false)
