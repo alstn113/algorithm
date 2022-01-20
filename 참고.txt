@@ -1,3 +1,5 @@
+--JAVASCRIPT--
+
 "가나다".repeat(2) => "가나다가나다" // 문자열 반복
 console.log(`${a} ${b}`) // 문자열 포맷팅
 
@@ -74,3 +76,10 @@ const getCombinations = function (arr, selectNumber) {
 }
 
 배열의 모든 값이 같은 지 확인 // arr.every(v => v=== arr[0]) or arr.reduce((a,b) => return (a===b) ? true : false)
+
+const arr = Array(5)
+  .fill(null)
+  .map(() => Array());
+// 2차원 빈배열 만들기
+
+while(queue) 이거 안되는 듯 그냥 length로 풀기
