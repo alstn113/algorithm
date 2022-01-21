@@ -1,3 +1,5 @@
+# 다익스트라는 모든 노드에 대해서 특정 노드와의 최단 거리를 구하는 알고리즘
+
 import heapq
 import sys
 input = sys.stdin.readline
