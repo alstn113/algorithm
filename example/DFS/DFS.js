@@ -9,6 +9,7 @@ console.log(result);
 function dfs(graph, v, visited) {
   visited[v] = true;
   result += `${v} `;
+
   for (i of graph[v]) {
     if (!visited[i]) dfs(graph, i, visited);
     // 그 노드가 방문하지 않은 노드인면 dfs 재귀
