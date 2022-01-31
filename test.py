@@ -1,64 +1,54 @@
 from collections import deque
-import sys
-input = sys.stdin.readline
-
-arr = [[0]*501 for _ in range(501)]
-visited = [[False]*501 for _ in range(501)]
-
-dx = [1, -1, 0, 0]
-dy = [0, 0, 1, -1]
-
-N = int(input())
-for _ in range(N):
-    X1, Y1, X2, Y2 = map(int, input().split())
-    max_X = max(X1, X2)
-    min_X = min(X1, X2)
-    max_Y = max(Y1, Y2)
-    min_Y = min(Y1, Y2)
-    for i in range(min_X, max_X+1):
-        for j in range(min_Y, max_Y+1):
-            arr[i][j] = -1
-M = int(input())
-for _ in range(M):
-    X1, Y1, X2, Y2 = map(int, input().split())
-    max_X = max(X1, X2)
-    min_X = min(X1, X2)
-    max_Y = max(Y1, Y2)
-    min_Y = min(Y1, Y2)
-    for i in range(min_X, max_X+1):
-        for j in range(min_Y, max_Y+1):
-            arr[i][j] = 1
 
 
-def bfs():
-    q = deque()
-    q.append((0, 0, 0))
-    visited[0][0] = True
-    while q:
-        x, y, cnt = q.popleft()
-        if x == 500 and y == 500:
-            print(cnt)
-            return
-
+def bfs(x, y):
+    queue = deque([(x, y)])
+    visited[x][y] = 0
+    while queue:
+        x, y = queue.popleft()
         for i in range(4):
-            nx = x+dx[i]
-            ny = y+dy[i]
-            if nx < 0 or ny < 0 or nx >= 501 or ny >= 501:
-                continue
-            if visited[nx][ny]:
-                continue
-            # 죽음구역은 불가능
-            if arr[nx][ny] == 1:
-                continue
-            # 위험구역은 가중치 1
-            if arr[nx][ny] == -1:
-                q.append((nx, ny, cnt+1))
-                visited[nx][ny] = True
-            # 안전구역은 가중치 0
-            if arr[nx][ny] == 0:
-                q.appendleft((nx, ny, cnt))
-                visited[nx][ny] = True
-    print(-1)
+            # 동 남 서 북 순서
+            nx, ny = x + dx[i], y + dy[i]
+            while True:
+                # 범위를 벗어난다
+                if not (0 <= nx < n and 0 <= ny < m):
+                    break
+                # 벽을 만난다
+                if board[nx][ny] == "*":
+                    break
+                # 지난 적 있는 곳인데, 지금 경로로는 너무 많은 거울이 필요해서 break
+                if visited[nx][ny] < visited[x][y] + 1:
+                    break
+                # board업데이트, queue 추가
+                queue.append((nx, ny))
+                visited[nx][ny] = visited[x][y] + 1
+                nx = nx + dx[i]
+                ny = ny + dy[i]
 
 
-bfs()
+if __name__ == "__main__":
+    # 입력값
+    m, n = map(int, input().split())
+    board = [input() for _ in range(n)]
+
+    # 동 남 서 북
+    dx = (0, 1, 0, -1)
+    dy = (1, 0, -1, 0)
+
+    # C위치
+    C = []
+    for i in range(n):
+        for j in range(m):
+            if board[i][j] == "C":
+                C.append((i, j))
+    # sx,sy : 시작지점
+    # ex,ey : 도착지점
+    (sx, sy), (ex, ey) = C
+
+    visited = [[float("inf")] * m for _ in range(n)]
+    bfs(sx, sy)
+
+    print(visited[ex][ey] - 1)
+
+
+# 코드 참고 : https://www.acmicpc.net/source/27251914
