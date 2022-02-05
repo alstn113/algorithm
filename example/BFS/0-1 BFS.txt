@@ -5,6 +5,7 @@
 그냥 bfs에서 appendleft로 가중치가 0인 것을
 우선순위로 큐에 넣는 방법이다.
 
+visited = [[INF]*(W) for _ in range(H)]
 if visited[nx][ny] < visited[x][y] + 1:
   break
 이것은 다음 장소가 특정 값이나 경로횟수?가 더 낮으면 break한다는 뜻 
