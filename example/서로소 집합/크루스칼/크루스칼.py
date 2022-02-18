@@ -18,7 +18,7 @@ def union_parent(parent, a, b):
     if a < b:
         parent[b] = a
     else:
-        parent[a] = a
+        parent[a] = b
 
 
 v, e = map(int, input().split())

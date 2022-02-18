@@ -2,9 +2,24 @@
 간단한 코드상에서는 Python3가 메모리, 속도 측에서 우세함
 복잡한 코드(반복)을 사용하는 경우에서는 PyPy3가 우세함
 
-for i in range(H):
-    for j in range(W):
-        if arr[i][j] == "C":
-            C_location.append((i, j))
-(start_x, start_y), (end_x, end_y) = C_location
-특정 두 값 위치 값 받아내기
+//특정 두 값 위치 값 받아내기
+    for i in range(H):
+        for j in range(W):
+            if arr[i][j] == "C":
+                C_location.append((i, j))
+    (start_x, start_y), (end_x, end_y) = C_location
+
+// 3차원 배열
+    import sys
+    input = sys.stdin.readline
+
+    L, R, C = map(int, input().rstrip().split())
+    arr = [[[(i, j)]*C for j in range(R)] for i in range(L)]
+    for k in arr:
+        for t in k:
+            print(t)
+        print()
+
+    # 입력예제 : 3 4 5
+    # i가 층, j가 열
+    # print(arr[층][행][열])
