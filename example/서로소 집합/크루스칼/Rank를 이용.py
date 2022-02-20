@@ -1,3 +1,5 @@
+# 백준 13905번 세부 문제
+
 import sys
 input = sys.stdin.readline
 

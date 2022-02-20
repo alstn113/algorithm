@@ -22,12 +22,9 @@ def union_parent(parent, a, b):
 
 
 v, e = map(int, input().split())
-parent = [0]*(v+1)
+parent = [i for i in range(v+1)]
 edges = []
 result = 0
-
-for i in range(1, v+1):
-    parent[i] = i
 
 for _ in range(e):
     a, b, cost = map(int, input().split())
