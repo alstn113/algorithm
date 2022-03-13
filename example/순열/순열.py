@@ -1,8 +1,11 @@
 import sys
 input = sys.stdin.readline
 
+# TODO: 이거 뭔가 이상한듯 고치기
 
 # arr 배열에서 n개를 순서있게 뽑음
+
+
 def permutation(n, depth, P):
     result = []
     if depth == n:

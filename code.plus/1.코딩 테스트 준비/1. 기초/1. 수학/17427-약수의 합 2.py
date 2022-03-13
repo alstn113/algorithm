@@ -1,6 +1,5 @@
 # https://www.acmicpc.net/problem/17427
 
-import math
 import sys
 input = sys.stdin.readline
 
