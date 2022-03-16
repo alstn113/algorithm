@@ -13,7 +13,6 @@ for i in range(M):
 
 
 def dfs(v, depth):
-    global answer
     if depth == 5:
         print(1)
         exit(0)
