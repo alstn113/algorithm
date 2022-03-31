@@ -1,32 +1,23 @@
 import sys
 input = sys.stdin.readline
 
+dp = [0]*10001
 
-N, M = map(int, input().split())
-graph = [[] for _ in range(N)]
-visited = [False]*N
+dp[1] = 1
+dp[2] = 2
+dp[3] = 4
 
-for i in range(M):
-    a, b = map(int, input().split())
-    graph[a].append(b)
-    graph[b].append(a)
-
-
-def dfs(v, depth):
-    global answer
-    if depth == 5:
-        print(1)
-        exit(0)
-    for i in graph[v]:
-        if not visited[i]:
-            visited[i] = True
-            dfs(i, depth+1)
-            visited[i] = False
-
-
+N = int(input())
+tmp = []
 for i in range(N):
-    visited[i] = True
-    dfs(i, 1)
-    visited[i] = False
+    tmp.append(int(input()))
 
-print(0)
+MAX = max(tmp)
+print(tmp)
+print(MAX)
+for i in range(4,MAX):
+    dp[i] = dp[i-1]+dp[i-2]+dp[i-3]
+
+print(dp[:10])
+for i in tmp:
+    print(dp[i])
