@@ -33,4 +33,4 @@ def bfs():
 
 bfs()
 
-print("No path" if visited[N-1][N-1] == "INF" else visited[N-1][N-1])
+print("No path" if visited[N-1][N-1] == INF else visited[N-1][N-1])
