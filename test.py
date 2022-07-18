@@ -1,14 +1,26 @@
-import sys
-input = sys.stdin.readline
+from collections import deque
 
-N = int(input())
-written = list(map(int, input().split()))
-M = int(input())
-question = []
-for _ in range(M):
-    s, e = map(int, input().split())
-    question.append((s, e))
+N = 6
+M = 6
 
-# 1 2 1 3 1 2 1
 
-# 일단 2차원 배열로 만들어야하나?
+def bfs(x, y, visited):
+    q = deque()
+    q.append((x, y, 0))
+    visited[x][y] = True
+
+    while q:
+        x, y, cnt = q.popleft()
+
+        if x == 1 and y == 1:
+            return cnt
+
+        for d in ((1, 0), (0, 1), (-1, 0), (0, -1)):
+            nx = x+d[0]
+            ny = y+d[1]
+            if not (0 <= nx < N and 0 <= ny < M):
+                continue
+            if visited[nx][ny]:
+                continue
+            visited[nx][ny] = True
+            q.append((nx, ny, cnt + 1))
