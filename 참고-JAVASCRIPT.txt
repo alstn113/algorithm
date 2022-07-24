@@ -1,5 +1,7 @@
 --JAVASCRIPT--
 
+실행 방법 node <js파일 이름>
+
 "가나다".repeat(2) => "가나다가나다" // 문자열 반복
 console.log(`${a} ${b}`) // 문자열 포맷팅
 
