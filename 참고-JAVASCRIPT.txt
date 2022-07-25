@@ -1,4 +1,4 @@
---JAVASCRIPT--
+-JAVASCRIPT-
 
 실행 방법 node <js파일 이름>
 
@@ -85,3 +85,6 @@ const arr = Array(5)
 // 2차원 빈배열 만들기
 
 while(queue) 이거 안되는 듯 그냥 length로 풀기
+
+객체 반복문       
+const [key, value] = Object.entries(dic[item]);
