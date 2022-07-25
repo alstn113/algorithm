@@ -88,3 +88,8 @@ while(queue) 이거 안되는 듯 그냥 length로 풀기
 
 객체 반복문       
 const [key, value] = Object.entries(dic[item]);
+
+const dic = {}
+a in dic 처럼 in은 객체 전용이라고 볼 수 있고,
+const array = []
+array.includes(a) 처럼 includes는 배열 전용이라고 볼 수 있다.
