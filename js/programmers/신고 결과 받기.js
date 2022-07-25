@@ -1,26 +1,13 @@
 function solution(id_list, report, k) {
   const answer = [];
   const dic = {};
+  id_list.map((id) => (dic[id] = { report: [], reportedCount: 0 }));
   for (let item of report) {
-    const [a, b] = item.split(' ');
+    const [reporter, reportedId] = item.split(' ');
 
-    if (a in dic === false) {
-      dic[a] = {
-        report: [],
-        reportedCount: 0,
-      };
-    }
-
-    if (b in dic === false) {
-      dic[b] = {
-        report: [],
-        reportedCount: 0,
-      };
-    }
-
-    if (!dic[a]['report'].includes(b)) {
-      dic[a]['report'].push(b);
-      dic[b]['reportedCount'] += 1;
+    if (!dic[reporter]['report'].includes(reportedId)) {
+      dic[reporter]['report'].push(reportedId);
+      dic[reportedId]['reportedCount'] += 1;
     }
   }
   for (let id of id_list) {
