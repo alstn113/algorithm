@@ -10,7 +10,6 @@ function solution(n, lost, reserve) {
       array[i - 1] = 1;
       answer += 2;
     } else if (i < array.length - 1 && array[i] == 2 && array[i + 1] == 0) {
-      console.log('ar', array[i]);
       array[i] = 1;
       array[i + 1] = 1;
       answer += 2;
