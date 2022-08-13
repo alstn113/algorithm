@@ -1,11 +1,11 @@
 function solution(arr1, arr2) {
   const result = [];
-  const [N, M] = [arr1.length, arr2[0].length];
+  const [N, M, T] = [arr1.length, arr2[0].length, arr1[0].length];
   for (let i = 0; i < N; i++) {
     const tmp = [];
     for (let j = 0; j < M; j++) {
       let sum = 0;
-      for (let k = 0; k < M; k++) {
+      for (let k = 0; k < T; k++) {
         sum += arr1[i][k] * arr2[k][j];
       }
       tmp.push(sum);
