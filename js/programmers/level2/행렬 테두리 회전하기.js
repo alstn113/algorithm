@@ -28,7 +28,6 @@ function solution(rows, columns, queries) {
 
     array[x1][y1 + 1] = tmp;
     result.push(min);
-    console.log(array);
   }
   return result;
 }
