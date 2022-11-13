@@ -1,4 +1,3 @@
-from gettext import find
 import sys
 input = sys.stdin.readline
 
@@ -15,7 +14,7 @@ def union_parent(parent, a, b):
     if a < b:
         parent[b] = a
     else:
-        parent[b] = a
+        parent[a] = b
 
 
 # 노드와 간선(union 연산)의 개수 입력받기

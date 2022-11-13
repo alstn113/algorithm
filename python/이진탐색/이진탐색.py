@@ -1,6 +1,5 @@
-
-
 import sys
+input = sys.stdin.readline
 
 
 def binary_search(array, target, start, end):
@@ -16,9 +15,9 @@ def binary_search(array, target, start, end):
 
 
 # 원소 개수, 찾을려는 수
-n, target = list(map(int, sys.stdin.readline().split()))
+n, target = list(map(int, input().split()))
 # 전체 원소 배열
-array = list(map(int, sys.stdin.readline().split()))
+array = list(map(int, input().split()))
 
 result = binary_search(array, target, 0, n-1)
 if result == None:

@@ -1,5 +1,5 @@
 import sys
-input = sys.stdin.readline().rstrip
+input = sys.stdin.readline
 
 n = 5  # 데이터 개수
 m = 5  # 찾고자 하는 부분합
