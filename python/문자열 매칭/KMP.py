@@ -22,6 +22,7 @@ def getPi(p):
         if p[i] == p[j]:
             j += 1
             pi[i] = j
+    
     return pi
 
 def kmp(t, p):
