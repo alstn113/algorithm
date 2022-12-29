@@ -1,3 +1,11 @@
+# 정의
+# 이분 매칭이란 a 집단에서 b 집단을 최대로 선택하는 문제
+# 참고 자료
+# https://www.youtube.com/watch?v=PwXNTA0rpXc&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwfVrz&index=33
+# 관련 문제
+# https://www.acmicpc.net/problem/2188
+# https://www.acmicpc.net/problem/11375
+
 import sys
 input = sys.stdin.readline
 
