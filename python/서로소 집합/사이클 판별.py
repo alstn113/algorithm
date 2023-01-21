@@ -19,7 +19,7 @@ def union_parent(parent, a, b):
 
 # 노드와 간선(union 연산)의 개수 입력받기
 v, e = map(int, input().split())
-parent = [0]*(v+1)
+parent = [i for i in range(v+1)]
 
 # 부모를 자기 자신으로 초기화
 for i in range(1, v+1):
