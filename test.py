@@ -1,35 +1,24 @@
+# 신발끝 공식 참고
 import sys
+
 input = sys.stdin.readline
 
+N = int(input())
 
-def find_parent(parent, x):
-    if parent[x] != x:
-        parent[x] = find_parent(parent, parent[x])
-    return parent[x]
+data = []
+result1 = 0
+result2 = 0
+a1, b1 = map(int, input().split())
+data.append([a1, b1])
 
-
-def union_parent(parent, a, b):
-    a = find_parent(parent, a)
-    b = find_parent(parent, b)
-
-    if a < b:
-        parent[b] = a
-    else:
-        parent[a] = b
-
-
-N, M = map(int, input().split())
-
-parent = [i for i in range(N)]
-
-result = 0
-for i in range(M):
+for i in range(1, N):
     a, b = map(int, input().split())
+    data.append([a, b])
+    result1 += a*data[i-1][1]
+    result2 += b*data[i-1][0]
 
-    if find_parent(parent, a) == find_parent(parent, b):
-        result = i+1
-        break
-    else:
-        union_parent(parent, a, b)
+result1 += a1*data[N-1][1]
+result2 += b1*data[N-1][0]
 
+result = round(0.5*abs(result1 - result2), 1)
 print(result)
