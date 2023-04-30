@@ -1,14 +1,10 @@
-from itertools import permutations
 
 def solution(babbling):
-    data = []
-    able_to_say = ["aya", "ye", "woo", "ma"]
-    for i in range(1, 4+1):
-        for p in list(permutations(able_to_say,i)):
-            data.append("".join(p))
-    
-    cnt = 0
+    c = 0
     for b in babbling:
-        if b in data:
-            cnt += 1
-    return cnt
+        for w in [ "aya", "ye", "woo", "ma" ]:
+            if w * 2 not in b:
+                b = b.replace(w, ' ')
+        if len(b.strip()) == 0:
+            c += 1
+    return c
