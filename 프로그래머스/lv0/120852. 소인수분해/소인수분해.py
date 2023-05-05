@@ -4,8 +4,9 @@ def solution(n):
     while i<=n:
         if n%i == 0:
             n = n // i
-            data.append(i)
+            if i not in data:
+                data.append(i)
         else:
             i += 1
-    return sorted(list(set(data)))
+    return data
             
