@@ -7,18 +7,16 @@ def is_prime(n):
     return True
 
 def solution(n, k):
-    t = ""
+    answer = 0
+    s = ""
     while n > 0:
-        n, mod = divmod(n, k)
-        t += str(mod)
+        n, mod  = divmod(n, k)
+        s = str(mod) + s
+    s = s.split("0")
+    for v in s:
+        if v == "":
+            continue
+        if is_prime(int(v)):
+            answer += 1
     
-    t = t[::-1].split("0")
-    
-    result = 0
-    for v in t:
-        if v != "":
-            if is_prime(int(v)):
-                result += 1
-            
-    return result
-    
+    return answer
