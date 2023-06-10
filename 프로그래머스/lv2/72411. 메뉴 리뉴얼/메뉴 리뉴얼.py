@@ -6,22 +6,19 @@ def solution(orders, course):
         dic = {}
         for order in orders:
             order = sorted(list(order))
-            comb_list = list(combinations(order, c))
-            for comb in comb_list:
-                comb = "".join(comb)
-                if comb not in dic:
-                    dic[comb] = 1
+            comb = list(combinations(order, c))
+            for v in comb:
+                v = "".join(v)
+                if v not in dic:
+                    dic[v] = 1
                 else:
-                    dic[comb] += 1
-        dic_list = []
-        for key, value in dic.items():
-            if value > 1:
-                dic_list.append((key, value))
-        dic_list.sort(key=lambda x: -x[1])
+                    dic[v] += 1
+        dic_items = list(dic.items())
+        dic_items.sort(key=lambda x: -x[1])
         
-        for i in range(len(dic_list)):
-            if dic_list[0][1] == dic_list[i][1]:
-                result.append(dic_list[i][0])
+        for i in range(len(dic_items)):
+            if dic_items[0][1] == dic_items[i][1] and dic_items[i][1] > 1:
+                result.append(dic_items[i][0])
             
             
     return sorted(result)
