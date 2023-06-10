@@ -7,10 +7,10 @@ def solution(q1, q2):
     q1 = deque(q1)
     q2 = deque(q2)
     
-    l = len(q1)*2*2
+    l = len(q1)*2
     cnt = 0
     while True:
-        if cnt > l:
+        if cnt > l+2:
             return -1
         if sum_1 == sum_2:
             return cnt
