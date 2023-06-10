@@ -1,31 +1,27 @@
 from collections import deque
 
-def solution(queue1, queue2):
-    sum1 = sum(queue1)
-    sum2 = sum(queue2)
+def solution(q1, q2):
+    sum_1 = sum(q1)
+    sum_2 = sum(q2)
     
-    l = 2*len(queue1)
+    q1 = deque(q1)
+    q2 = deque(q2)
     
-    queue1 = deque(queue1)
-    queue2 = deque(queue2)
-    
+    l = len(q1)*2*2
     cnt = 0
-    
     while True:
-        if cnt > l*2:
+        if cnt > l:
             return -1
-        if sum1 > sum2:
-            t = queue1.popleft()
-            queue2.append(t)
-            sum1 -= t
-            sum2 += t
-        elif sum1 < sum2:
-            t = queue2.popleft()
-            queue1.append(t)
-            sum1 += t
-            sum2 -= t
-        else:
+        if sum_1 == sum_2:
             return cnt
-        
+        if sum_1 > sum_2:
+            v = q1.popleft()
+            q2.append(v)
+            sum_1 -= v
+            sum_2 += v     
+        else:
+            v = q2.popleft()
+            q1.append(v)
+            sum_2 -= v
+            sum_1 += v   
         cnt += 1
-                
