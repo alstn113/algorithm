@@ -1,33 +1,33 @@
-def solve_sharp(music):
-    sharp = ["A#", "C#", "D#", "F#", "G#"]
-    lower = ["a", "c", "d", "f", "g"]
-    for a, b in zip(sharp, lower):
-        music = music.replace(a, b)
+def solve_sharp(m):
+    sharp = [("C#", "c"), ("D#", "d"), ("F#", "f"), ("G#", "g"), ("A#", "a")]
+    for s in sharp:
+        m = m.replace(s[0], s[1])
+    return m
 
-    return music
+def parse_time(s, e):
+    s = int(s.split(":")[0])*60 + int(s.split(":")[1])
+    e = int(e.split(":")[0])*60 + int(e.split(":")[1])
+    time = e-s
+    return time
 
+def make_full_music(music, time):
+    return music*(time//len(music)) + music[:time%len(music)]
 
 def solution(m, musicinfos):
-    answer = []
+    m = solve_sharp(m)
+    
+    result = []
     for idx, info in enumerate(musicinfos):
-        music = info.split(',')
-        start = music[0].split(':')
-        end = music[1].split(':')
-
-        playtime = (int(end[0])*60 + int(end[1])) - \
-            (int(start[0])*60 + int(start[1]))
-
-        changed = solve_sharp(music[3])
-
-        a = len(changed)
-
-        b = changed * (playtime // a) + changed[:playtime % a]
-
-        m = solve_sharp(m)
-
-        if m in b:
-            answer.append([playtime, idx, music[2]])
-
-    answer = sorted(answer, key=lambda x: (-x[0], x[1]))
-
-    return not answer and "(None)" or answer[0][2]
+        s, e, title, music = info.split(",")
+        time = parse_time(s, e)
+        music = solve_sharp(music)
+        full_music = make_full_music(music, time)
+        
+        if m in full_music:
+            result.append([title, time, idx])
+            
+    result.sort(key=lambda x: (-x[1], x[2]))
+    
+    if result:
+        return result[0][0]
+    return "(None)"
