@@ -20,7 +20,7 @@ def compress_str(s, l):
 def solution(s):
     str_len = len(s)
     answer = str_len
-    for i in range(1, str_len):
+    for i in range(1, str_len//2+1):
         compressed_str = compress_str(s, i)
         answer = min(answer, compressed_str)
         
