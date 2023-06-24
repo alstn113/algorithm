@@ -1,0 +1,1 @@
+def solution(i) eval i end
