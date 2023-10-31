@@ -1,36 +1,56 @@
+def convert_time_to_minute(time):
+    hour,minute = time.split(":")
+    return int(hour)*60+int(minute)
+
 def solution(plans):
-    # 시작 시간을 분으로 변경하고 오름차순으로 정렬
-    for i in range(len(plans)):
-        hour, minute = plans[i][1].split(":")
-        plans[i][1] = int(hour) * 60 + int(minute)
-        plans[i][2] = int(plans[i][2])
-    plans.sort(key=lambda x: x[1])
+    
+    total_len = len(plans)
+    answer = []
+        
+    plans.sort(key = lambda x: x[1])
+    
+    for idx,plan in enumerate(plans):
+        
+        todo = plan[0]
+        start_time = convert_time_to_minute(plan[1])
+        left_time = int(plan[2])
+        next_idx = min(idx+1, total_len-1)
+        
+        plans[idx] = ([todo, start_time,left_time, next_idx])
 
-    stack = []
-    result = []
-    for i in range(len(plans)-1):
-        cur, next = plans[i], plans[i+1]
-        remaining_time = next[1] - cur[1]
-        if remaining_time < cur[2]:
-            cur[2] -= remaining_time
-            stack.append(cur)
+    stack = [plans[0]]
+    visitied = [False] * total_len
+    visitied[0] = True
+    
+    while stack:
+        now = stack[-1]
+        now_start_time, now_left_time = now[1], now[2]
+        next_idx = now[3]
+        
+        if visitied[next_idx] == False:
+            next_start_time = plans[next_idx][1]
+            
+            if now_start_time + now_left_time < next_start_time:
+                answer.append(stack.pop()[0])
+                
+                if stack:
+                    stack[-1][1] = now_start_time + now_left_time
+                    stack[-1][3] = next_idx
+                    continue
+                    
+            if now_start_time + now_left_time == next_start_time:
+                answer.append(stack.pop()[0])
+                visitied[next_idx] = True
+                stack.append(plans[next_idx])
+                continue
+            
+            if stack:
+                stack[-1][2] -= (next_start_time - now_start_time)
+            visitied[next_idx] = True
+            stack.append(plans[next_idx])
+        
         else:
-            result.append(cur[0])
-            remaining_time -= cur[2]
-
-            while stack:
-                if stack[-1][2] > remaining_time:
-                    stack[-1][2] -= remaining_time
-                    break
-                else:
-                    remaining_time -= stack[-1][2]
-                    v = stack.pop()
-                    result.append(v[0])
-    result.append(plans[-1][0])
-
-    if stack:
-        stack = [v[0] for v in stack]
-        stack = stack[::-1]
-        result += stack
-
-    return result
+            stack[-1][1] = now_start_time + now_left_time
+            answer.append(stack.pop()[0])
+        
+    return answer
