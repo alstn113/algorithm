@@ -7,13 +7,8 @@ def get_playtime(start_time, end_time):
     return parse_time(end_time) - parse_time(start_time)
 
 
-def parse_music(music):
-    music = music.replace("C#", "c")
-    music = music.replace("D#", "d")
-    music = music.replace("F#", "f")
-    music = music.replace("G#", "g")
-    music = music.replace("A#", "a")
-    return music
+def parse_music(music: str):
+    return music.replace("C#", "c").replace("D#", "d").replace("F#", "f").replace("G#", "g").replace("A#", "a")
 
 
 def extend_music(akbo, playtime):
@@ -30,13 +25,8 @@ def solution(melody, musicinfos):
         akbo = parse_music(akbo)
         akbo = extend_music(akbo, playtime)
 
-        print(melody)
-        print(akbo)
-
         if melody in akbo:
             answer.append([music_name, playtime])
 
     answer.sort(key=lambda x: -x[1])
-    if answer:
-        return answer[0][0]
-    return "(None)"
+    return answer[0][0] if answer else "(None)"
