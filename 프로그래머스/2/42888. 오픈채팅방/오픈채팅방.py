@@ -5,18 +5,20 @@ def solution(records):
         # command = Enter, Leave, Change
         if record.startswith("Leave"):
             command, uid = record.split()
+            answer.append([command, uid])
+        elif record.startswith("Enter"):
+            command, uid, name = record.split()
+            dic[uid] = name
+            answer.append([command, uid])
         else:
             command, uid, name = record.split()
-        if command == "Enter" or command == "Change":
             dic[uid] = name
-        answer.append([command, uid])
 
     result = []
-    for message in answer:
-        command, uid = message
+    for (command, uid) in answer:
         if command == "Enter":
             result.append(f"{dic[uid]}님이 들어왔습니다.")
-        elif command == "Leave":
+        else:
             result.append(f"{dic[uid]}님이 나갔습니다.")
 
     return result
