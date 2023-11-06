@@ -1,40 +1,93 @@
-
 import sys
 input = sys.stdin.readline
 
-N, M = map(int, input().split())
-arr = [list(map(int, input().split())) for _ in range(N)]
-visited = [[False]*M for _ in range(N)]
+length, width = map(int, input().split())
+paper = [[0 for i in range(width)] for j in range(length)]
 
-answer = 0
+for i in range(length):
+    paper[i] = list(map(int, input().split()))
 
+ans = 0
+for i in range(length):
+    for j in range(width):
+    
+    # □□□□ 모양의 테트로미노의 가능한 경우의 수    
+        # 가로로 길게 배치
+        if j+3 < width:
+            tmp = paper[i][j] + paper[i][j+1] + paper[i][j+2] + paper[i][j+3]
+            if ans < tmp: ans = tmp
+        
+        # 세로로 길게 배치
+        if i+3 < length:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i+2][j] + paper[i+3][j]
+            if ans < tmp: ans = tmp
 
-def dfs(x, y, cnt, total):
-    global answer
-    if cnt == 4:
-        answer = max(answer, total)
-        return
-    for d in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-        nx = x+d[0]
-        ny = y+d[1]
-        if not (0 <= nx < N and 0 <= ny < M):
-            continue
-        if visited[nx][ny]:
-            continue
-        if cnt == 2:
-            visited[nx][ny] = True
-            dfs(x, y, cnt+1, total+arr[nx][ny])
-            visited[nx][ny] = False
-        visited[nx][ny] = True
-        dfs(nx, ny, cnt+1, total+arr[nx][ny])
-        visited[nx][ny] = False
+        # □□ 
+        # □□ 모양의 테트로미노의 가능한 경우의 수
+        if i+1 < length and j+1 < width:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i][j+1] + paper[i+1][j+1]
+            if ans < tmp: ans = tmp
 
+    # □□□ 
+    #  □  모양의 테트로미노의 가능한 경우의 수
+        if j+2 < width:
+            tmp = paper[i][j] + paper[i][j+1] + paper[i][j+2]
+            if i-1 >= 0:
+                tmp2 = tmp + paper[i-1][j+1]
+                if ans < tmp2: ans = tmp2
+            if i+1 < length:
+                tmp2 = tmp + paper[i+1][j+1]
+                if ans <tmp2: ans = tmp2
 
-for i in range(N):
-    for j in range(M):
-        visited[i][j] = True
-        dfs(i, j, 1, arr[i][j])
-        visited[i][j] = False
+        if i+2 < length:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i+2][j]
+            if j+1 < width:
+                tmp2 = tmp + paper[i+1][j+1]
+                if ans < tmp2: ans = tmp2
+            if j-1 >= 0:
+                tmp2 = tmp + paper[i+1][j-1]
+                if ans < tmp2: ans = tmp2
+    # □
+    # □□ 
+    #  □  모양의 테트로미노의 가능한 경우의 수
+        if i-1 >=0 and j+2 < width:
+            tmp = paper[i][j] + paper[i][j+1] + paper[i-1][j+1] + paper[i-1][j+2]
+            if ans < tmp: ans = tmp
+        if i+1 < length and j+2 < width:
+            tmp = paper[i][j] + paper[i][j+1] + paper[i+1][j+1] + paper[i+1][j+2]
+            if ans < tmp: ans = tmp
+        if i+2 < length and j+1 < width:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i+1][j+1] + paper[i+2][j+1]
+            if ans < tmp: ans = tmp
+        if i+2 < length and j-1 >= 0:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i+1][j-1] + paper[i+2][j-1]
+            if ans < tmp: ans = tmp
+    # □
+    # □ 
+    # □□ 모양의 테트로미노의 가능한 경우의 수
+        if i+2 < length and j+1 < width:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i+2][j] + paper[i+2][j+1]
+            if ans < tmp: ans = tmp
+        if i+2 < length and j-1 >= 0:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i+2][j] + paper[i+2][j-1]
+            if ans < tmp: ans = tmp
+        if i-1 >= 0 and j+2 < width:
+            tmp = paper[i][j] + paper[i][j+1] + paper[i][j+2] + paper[i-1][j+2]
+            if ans < tmp: ans = tmp
+        if i+1 < length and j+2 < width:
+            tmp = paper[i][j] + paper[i+1][j] + paper[i+1][j+1] + paper[i+1][j+2]
+            if ans < tmp: ans = tmp
+        if i-1 >= 0 and j+2 < width:
+            tmp = paper[i][j] + paper[i-1][j] + paper[i-1][j+1] + paper[i-1][j+2]
+            if ans < tmp: ans = tmp
+        if i+1 < length and j+2 < width:
+            tmp = paper[i][j] + paper[i][j+1] + paper[i][j+2] + paper[i+1][j+2]
+            if ans < tmp: ans = tmp
+        if i+2 < length and j-1 >= 0:
+            tmp = paper[i][j] + paper[i][j-1] + paper[i+1][j-1] + paper[i+2][j-1]
+            if ans < tmp: ans = tmp
+        if i+2 < length and j+1 < width:
+            tmp = paper[i][j] + paper[i][j+1] + paper[i+1][j+1] + paper[i+2][j+1]
+            if ans < tmp: ans = tmp
 
-
-print(answer)
+print(ans)
