@@ -8,7 +8,4 @@ while len(S) != len(T):
     if T.pop() == "B":
         T = T[::-1]
 
-if S == "".join(T):
-    print(1)
-else:
-    print(0)
+print(int(S == "".join(T)))
