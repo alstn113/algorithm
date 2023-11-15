@@ -5,12 +5,19 @@ H, W = map(int, input().split())
 heights = list(map(int, input().split()))
 
 result = 0
-for i in range(1, W-1):
-    left_max = max(heights[:i])
-    right_max = max(heights[i+1:])
+stack = []
 
-    lower_one = min(left_max, right_max)
+for i in range(W):
+    while stack and heights[i] > heights[stack[-1]]:
+        top = stack.pop()
 
-    if heights[i] < lower_one:
-        result += lower_one - heights[i]
+        if not stack:
+            break
+
+        distance = i - stack[-1] - 1
+        bounded_height = min(heights[i], heights[stack[-1]]) - heights[top]
+        result += distance * bounded_height
+
+    stack.append(i)
+
 print(result)
