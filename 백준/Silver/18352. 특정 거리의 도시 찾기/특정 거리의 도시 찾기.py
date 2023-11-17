@@ -9,7 +9,7 @@ distance = [INF]*(N+1)
 
 for _ in range(M):
     A, B = map(int, input().split())
-    graph[A].append((B, 1))
+    graph[A].append(B)
 
 
 def dijkstra(start):
@@ -21,18 +21,18 @@ def dijkstra(start):
         if distance[now] < dist:
             continue
         for i in graph[now]:
-            cost = dist + i[1]
-            if cost < distance[i[0]]:
-                distance[i[0]] = cost
-                heapq.heappush(q, (cost, i[0]))
+            cost = dist + 1
+            if cost < distance[i]:
+                distance[i] = cost
+                heapq.heappush(q, (cost, i))
 
 
 dijkstra(X)
 
-cnt = 0
-for i in range(len(distance)):
-    if distance[i] == K:
-        print(i)
-        cnt += 1
-if cnt == 0:
+
+result = [i for i in range(1, N+1) if distance[i] == K]
+if result:
+    for node in result:
+        print(node)
+else:
     print(-1)
