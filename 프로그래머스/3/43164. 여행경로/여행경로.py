@@ -1,71 +1,31 @@
-
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-from collections import defaultdict 
-
-def dfs(graph, N, key, footprint):
-    print(footprint)
-
-    if len(footprint) == N + 1:
-        return footprint
-
-    for idx, country in enumerate(graph[key]):
-        graph[key].pop(idx)
-
-        tmp = footprint[:]
-        tmp.append(country)
-
-        ret = dfs(graph, N, country, tmp)
-
-        graph[key].insert(idx, country)
-
-        if ret:
-            return ret
-
-
 def solution(tickets):
     answer = []
+    visited = [False]*len(tickets)
 
-    graph = defaultdict(list)
+    def dfs(current, path):
+        nonlocal answer
 
-    N = len(tickets)
-    for ticket in tickets:
-        graph[ticket[0]].append(ticket[1])
-        graph[ticket[0]].sort()
+        if len(path) == len(tickets)+1:
+            if not answer or path < answer:
+                answer = path[:]
+            return
 
-    answer = dfs(graph, N, "ICN", ["ICN"])
+        for idx, ticket in enumerate(tickets):
+            if visited[idx]:
+                continue
+
+            a, b = ticket
+            if current == a:
+                visited[idx] = True
+                tmp = path[:]
+                tmp.append(b)
+                dfs(b, tmp)
+                visited[idx] = False
+
+                # 백트래킹: 현재 경로가 이미 찾은 경로 중에서 사전 순으로 뒤에 있다면 종료
+                if answer and path >= answer:
+                    return
+
+    dfs("ICN", ["ICN"])
 
     return answer
