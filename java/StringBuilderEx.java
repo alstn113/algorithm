@@ -1,5 +1,3 @@
-import java.util.StringJoiner;
-
 class StringBuilderEx {
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder("apple");
