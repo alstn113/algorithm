@@ -1,3 +1,3 @@
-SELECT ANIMAL_ID, ANIMAL_TYPE, DATETIME, INTAKE_CONDITION, NAME, SEX_UPON_INTAKE 
-FROM ANIMAL_INS
-ORDER BY ANIMAL_ID ASC
+select animal_id, animal_type, datetime, intake_condition, name, sex_upon_intake
+from animal_ins
+order by animal_id asc
