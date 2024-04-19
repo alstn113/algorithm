@@ -1,5 +1,7 @@
-select name, count(name) as "count"
+select 
+    name,
+    count(name) as "count"
 from animal_ins
 group by name
 having count(name) > 1
-order by name asc;
+order by name asc
