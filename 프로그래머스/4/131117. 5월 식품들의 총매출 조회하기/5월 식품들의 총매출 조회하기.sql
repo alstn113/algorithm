@@ -1,11 +1,11 @@
-SELECT
-    FP.PRODUCT_ID,
-    FP.PRODUCT_NAME,
-    SUM(FO.AMOUNT * FP.PRICE) AS TOTAL_SALES
-FROM FOOD_PRODUCT AS FP
-JOIN FOOD_ORDER AS FO
-ON FP.PRODUCT_ID = FO.PRODUCT_ID
-WHERE FO.PRODUCE_DATE LIKE "2022-05-%"
-GROUP BY FP.PRODUCT_ID
-ORDER BY TOTAL_SALES DESC, FP.PRODUCT_ID ASC
+select 
+    fp.product_id,
+    fp.product_name,
+    sum(fo.amount) * fp.price as total_sales
+from food_product as fp
+join food_order as fo
+on fp.product_id = fo.product_id
+where fo.produce_date like "2022-05-%"
+group by fp.product_id
+order by total_sales desc, fp.product_id asc
 
