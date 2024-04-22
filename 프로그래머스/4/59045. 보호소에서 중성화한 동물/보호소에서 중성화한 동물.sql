@@ -1,12 +1,11 @@
-SELECT 
-    AI.ANIMAL_ID,
-    AI.ANIMAL_TYPE,
-    AO.NAME
-FROM ANIMAL_INS AS AI
-JOIN ANIMAL_OUTS AS AO
-ON AI.ANIMAL_ID = AO.ANIMAL_ID
-WHERE AI.SEX_UPON_INTAKE LIKE "%Intact%" AND 
-(
-    AO.SEX_UPON_OUTCOME LIKE "%Spayed%" OR
-    AO.SEX_UPON_OUTCOME LIKE "%Neutered%"
+select 
+    ai.animal_id,
+    ai.animal_type,
+    ao.name
+from animal_ins as ai
+join animal_outs as ao
+on ai.animal_id = ao.animal_id
+where ai.sex_upon_intake like "%Intact%" and (
+    ao.sex_upon_outcome like "%Spayed%" or
+    ao.sex_upon_outcome like "%Neutered%"
 )
