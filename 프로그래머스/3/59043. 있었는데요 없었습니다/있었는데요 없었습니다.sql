@@ -1,7 +1,8 @@
-SELECT
-    AO.ANIMAL_ID, AO.NAME
-FROM ANIMAL_OUTS AS AO
-JOIN ANIMAL_INS AS AI
-ON AO.ANIMAL_ID = AI.ANIMAL_ID
-WHERE AO.DATETIME < AI.DATETIME
-ORDER BY AI.DATETIME ASC
+select 
+    ao.animal_id,
+    ao.name
+from animal_outs as ao
+join animal_ins as ai
+on ao.animal_id = ai.animal_id
+where ao.datetime < ai.datetime
+order by ai.datetime asc
