@@ -1,7 +1,7 @@
-SELECT FH.FLAVOR
-FROM FIRST_HALF AS FH
-JOIN JULY AS J
-ON FH.FLAVOR = J.FLAVOR
-GROUP BY FH.FLAVOR
-ORDER BY SUM(FH.TOTAL_ORDER) + SUM(J.TOTAL_ORDER) DESC
-LIMIT 3
+select fh.flavor
+from first_half as fh
+join july as j
+on fh.flavor = j.flavor
+group by fh.flavor
+order by sum(fh.total_order) + sum(j.total_order) desc
+limit 3
