@@ -1,5 +1,7 @@
-SELECT AO.ANIMAL_ID, AO.NAME
-FROM ANIMAL_OUTS AS AO
-LEFT JOIN ANIMAL_INS AS AI 
-ON AI.ANIMAL_ID = AO.ANIMAL_ID
-WHERE AI.ANIMAL_ID IS NULL
+select
+    ao.animal_id,
+    ao.name
+from animal_outs as ao
+left join animal_ins as ai
+on ai.animal_id = ao.animal_id
+where ai.animal_id is null
