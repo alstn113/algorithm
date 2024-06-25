@@ -1,6 +1,6 @@
 # [level 0] n 번째 원소까지 - 181889 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181889?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181889) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 06월 25일 10:58:43
+2024년 06월 25일 11:01:50
 
 ### 문제 설명
 
