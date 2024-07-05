@@ -9,7 +9,7 @@ class Solution {
                 if (term.equals("x")) {
                     xCoefficient += 1;
                 } else {
-                    xCoefficient += Integer.parseInt(term.replace("x", ""));
+                    xCoefficient += Integer.parseInt(term.substring(0, term.length() - 1));
                 }
             } else {
                 constant += Integer.parseInt(term);
