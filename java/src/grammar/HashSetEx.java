@@ -1,11 +1,10 @@
+package grammar;
+
 import java.util.HashSet;
 
-class HashSetEx {
-    public static void main(String[] args) {
-        // HashSet: 중복 허용 x, 순서 x
-        // LinkedHashSet: 중복 허용 x, 순서 o (삽입순)
-        // TreeSet: 중복 허용 x, 이진 검색 트리 형태로 저장, 정렬된 순서로 저장
+public class HashSetEx {
 
+    public static void main(String[] args) {
         HashSet<Integer> set1 = new HashSet<>();
         HashSet<Integer> set2 = new HashSet<>();
 
@@ -27,27 +26,23 @@ class HashSetEx {
 
         // 차집합
         HashSet<Integer> difference = new HashSet<>(set1);
-        // set1 - set2
         difference.removeAll(set2);
 
-        // 포함하는지 확인
+        // 보유 여부
         System.out.println(set1.contains(1)); // true
 
-        // 비어있는지 확인
-        System.out.println(set1.isEmpty()); // false
-
-        // 길이
+        // 요소 개수
         System.out.println(set1.size()); // 3
 
-        // 순회
-        for (int i : set1) {
+        // 요소 비우기
+        // set1.clear();
+
+        // 요소 삭제
+        set1.remove(1);
+
+        // 요소 순회
+        for (Integer i : set1) {
             System.out.println(i);
         }
-
-        // 비우기
-        set1.clear();
-
-        // 제거
-        set1.remove(1);
     }
 }
