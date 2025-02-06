@@ -3,7 +3,7 @@ package algorithm.서로소_집합.최소_신장_트리;
 import java.util.ArrayList;
 import java.util.List;
 
-// 최소 신장 트리: 그래프의 모든 노드를 포함하면서 사이클이 존재하지 않는 부분 그래프
+// 최소 신장 트리(Minimum Spanning Tree, MST): 그래프의 모든 노드를 포함하면서 사이클이 존재하지 않는 부분 그래프
 // 크루스칼 알고리즘: 가장 적은 비용으로 신장 트리를 찾는 알고리즘
 public class 크루스칼 {
 
