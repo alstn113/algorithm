@@ -3,7 +3,7 @@ package algorithm.DP;
 // 0-1 배낭 문제 (0-1 Knapsack Problem)
 // 각 물건의 무게와 가치가 주어졌을 때, 배낭에 넣을 수 있는 물건들의 가치의 최댓값을 구하는 문제
 // 각 물건은 하나씩만 존재하며, 넣지 않거나(0), 넣거나(1)의 선택만 가능하다.
-public class 배낭_문제_0_1 {
+public class 배낭_문제 {
 
     // 물건의 무게와 가치
     static final int N = 5;
