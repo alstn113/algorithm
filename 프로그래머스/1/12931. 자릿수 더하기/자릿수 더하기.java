@@ -2,12 +2,11 @@ import java.util.*;
 
 public class Solution {
     public int solution(int n) {
-        int answer = 0;
-        String str = Integer.toString(n);
-        String[] arr = str.split("");
-        for (String s : arr) {
-            answer += Integer.parseInt(s);
+        int result = 0;
+        while (n > 0) {
+            result += n%10;
+            n /= 10;
         }
-        return answer;
+        return result;
     }
 }
