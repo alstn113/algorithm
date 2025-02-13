@@ -25,12 +25,7 @@ class Solution {
         }
 
         return stageList.stream()
-               .sorted((o1, o2) -> {
-                    if (o1.failure == o2.failure) {
-                        return Integer.compare(o1.stage, o2.stage);
-                    }
-                    return Double.compare(o2.failure, o1.failure);
-                })
+                .sorted((o1, o2) -> Double.compare(o2.failure, o1.failure))
                 .mapToInt(s -> s.stage)
                 .toArray();
     }
