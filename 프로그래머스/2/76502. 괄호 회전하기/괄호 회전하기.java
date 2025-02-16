@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 class Solution {
     public int solution(String s) {
         if (!isValid(s)) {
@@ -8,13 +10,23 @@ class Solution {
         for (int i = 0; i < s.length(); i++) {
             String newStr = s.substring(i) + s.substring(0, i);
 
-            while (newStr.contains("()") || newStr.contains("{}") || newStr.contains("[]")) {
-                newStr = newStr.replace("()", "");
-                newStr = newStr.replace("{}", "");
-                newStr = newStr.replace("[]", "");
+            Stack<Character> stack = new Stack<>();
+            for (char ch : newStr.toCharArray()) {
+                if (stack.isEmpty()) {
+                    stack.push(ch);
+                    continue;
+                }
+
+                char top = stack.peek();
+                if ((top == '(' && ch == ')') || (top == '{' && ch == '}') || (top == '[' && ch == ']')) {
+                    stack.pop();
+                    continue;
+                }
+
+                stack.push(ch);
             }
             
-            if (newStr.isEmpty()) {
+            if (stack.isEmpty()) {
                 cnt += 1;
             }
         }
