@@ -24,7 +24,6 @@ public class 다익스트라 {
 
     static List<List<Node>> graph = new ArrayList<>();
     static int[] distance = new int[N + 1];
-    static boolean[] visited = new boolean[N + 1];
 
     public static void main(String[] args) {
         // 그래프 초기화
@@ -34,9 +33,6 @@ public class 다익스트라 {
 
         // 최단 거리 테이블을 모두 무한으로 초기화
         Arrays.fill(distance, INF);
-
-        // 방문 여부 초기화
-        Arrays.fill(visited, false);
 
         // 간선 정보 입력
         for (int i = 0; i < M; i++) {
