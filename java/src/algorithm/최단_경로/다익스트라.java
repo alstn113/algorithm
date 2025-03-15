@@ -1,6 +1,9 @@
 package algorithm.최단_경로;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
 
 // 가중치가 있는 그래프에서 특정 노드에서 다른 모든 노드로의 최단 경로를 계산하는 알고리즘
 public class 다익스트라 {
@@ -57,11 +60,11 @@ public class 다익스트라 {
     }
 
     public static void dijkstra(int start) {
-        PriorityQueue<Node> pq = new PriorityQueue<>();
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.getDistance() - o2.getDistance());
         pq.offer(new Node(start, 0));
         distance[start] = 0;
 
-        while(!pq.isEmpty()) {
+        while (!pq.isEmpty()) {
             Node node = pq.poll();
             int dist = node.getDistance();
             int now = node.getNode();
@@ -85,7 +88,7 @@ public class 다익스트라 {
     }
 }
 
-class Node implements Comparable<Node> {
+class Node {
 
     private final int node;
     private final int distance;
@@ -101,10 +104,5 @@ class Node implements Comparable<Node> {
 
     public int getDistance() {
         return distance;
-    }
-
-    @Override
-    public int compareTo(Node other) {
-        return this.distance - other.distance;
     }
 }
