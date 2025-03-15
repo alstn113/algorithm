@@ -62,7 +62,6 @@ public class 다익스트라 {
     public static void dijkstra(int start) {
         PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.getDistance() - o2.getDistance());
         pq.offer(new Node(start, 0));
-        boolean[] visited = new boolean[N + 1];
 
         distance[start] = 0;
 
