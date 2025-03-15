@@ -62,6 +62,8 @@ public class 다익스트라 {
     public static void dijkstra(int start) {
         PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.getDistance() - o2.getDistance());
         pq.offer(new Node(start, 0));
+        boolean[] visited = new boolean[N + 1];
+
         distance[start] = 0;
 
         while (!pq.isEmpty()) {
@@ -69,10 +71,10 @@ public class 다익스트라 {
             int dist = node.getDistance();
             int now = node.getNode();
 
-            // 이미 길이가 더 짧은 경로가 있다면 무시
-            if (distance[now] < dist) {
+            if (visited[now]) {
                 continue;
             }
+            visited[now] = true;
 
             // 현재 노드와 연결된 다른 인접한 노드들을 확인
             for (Node nd : graph.get(now)) {
