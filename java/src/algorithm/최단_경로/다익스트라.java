@@ -71,10 +71,9 @@ public class 다익스트라 {
             int dist = node.getDistance();
             int now = node.getNode();
 
-            if (visited[now]) {
+            if (distance[now] < dist) {
                 continue;
             }
-            visited[now] = true;
 
             // 현재 노드와 연결된 다른 인접한 노드들을 확인
             for (Node nd : graph.get(now)) {
