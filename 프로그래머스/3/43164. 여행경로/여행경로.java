@@ -4,7 +4,8 @@ import java.util.List;
 
 class Solution {
 
-    static List<List<String>> answers = new ArrayList<>();
+    static List<String> answer = new ArrayList<>();
+    static boolean isFound = false;
 
     public String[] solution(String[][] tickets) {
         Arrays.sort(tickets, (o1, o2) -> {
@@ -18,12 +19,18 @@ class Solution {
         line.add("ICN");
         dfs("ICN", tickets, visited, line);
 
-        return answers.get(0).toArray(new String[0]);
+        return answer.toArray(String[]::new);
     }
 
     public void dfs(String current, String[][] tickets, boolean[] visited, List<String> line) {
+        if (isFound) {
+            return;
+        }
+        
         if (line.size() == tickets.length + 1) {
-            answers.add(line);
+            answer = new ArrayList<>(line);
+            isFound = true;
+            return;
         }
 
         for (int i = 0; i < tickets.length; i++) {
