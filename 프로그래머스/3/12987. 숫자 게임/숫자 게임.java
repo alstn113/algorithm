@@ -7,26 +7,16 @@ class Solution {
         Arrays.sort(A);
         Arrays.sort(B);
 
-        int[] canWinPlayers = new int[n];
-
-        int i = 0;
-        for (int j = 0; j < n; j++) {
-            while (i < n) {
-                if (A[j] < B[i]) {
-                    canWinPlayers[j] = n - i;
-                    break;
-                }
-                i++;
-            }
-        }
-
-        int tmp = 0;
+        int aIdx = 0;
+        int bIdx = 0;
         int answer = 0;
-        for (int v = n - 1; v >= 0; v--) {
-            if (canWinPlayers[v] - tmp > 0) {
-                tmp += 1;
+
+        while (bIdx < n) {
+            if (A[aIdx] < B[bIdx]) {
                 answer += 1;
+                aIdx += 1;
             }
+            bIdx += 1;
         }
 
         return answer;
