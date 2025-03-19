@@ -3,11 +3,7 @@ class Solution {
         int answer = 0;
         int n = sticker.length;
         answer = Math.max(answer, sticker[0] + calcMaxSum(2, n - 2, sticker));
-        System.out.println(answer);
-        answer = Math.max(answer, calcMaxSum(1, n - 3, sticker) + sticker[n - 1]);
-        System.out.println(answer);
-        answer = Math.max(answer, calcMaxSum(1, n - 2, sticker));
-        System.out.println(answer);
+        answer = Math.max(answer, calcMaxSum(1, n - 1, sticker));
 
         return answer;
     }
