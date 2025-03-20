@@ -1,15 +1,28 @@
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 
 class Solution {
+    public int solution(int[] stones, int k) {
+        int n = stones.length;
+        int answer = Integer.MAX_VALUE;
+        Deque<Integer> deque = new LinkedList<>();
 
-    static boolean[] visited = new boolean[9];
+        for (int i = 0; i < n; i++) {
+            if (!deque.isEmpty() && deque.peek() < i - k + 1) {
+                deque.poll();
+            }
 
-    public static void main(String[] args) {
+            while (!deque.isEmpty() && stones[deque.peekLast()] <= stones[i]) {
+                deque.pollLast();
+            }
 
+            deque.offer(i);
+
+            if (i >= k - 1) {
+                answer = Math.min(answer, stones[deque.peek()]);
+            }
+        }
+
+        return answer;
     }
 }
