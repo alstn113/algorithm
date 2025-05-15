@@ -5,6 +5,8 @@ import java.util.*;
 // 관련 문제: https://school.programmers.co.kr/learn/courses/30/lessons/64062
 // 모노톤 큐란 큐의 원소들이 증가하거나 감소하는 순서로 저장되어 있는 큐를 말함
 // 큐의 앞에는 최대값이 위치함. 큐의 뒤에는 최소값이 위치함
+
+// 장정: 슬라이딩 윈도우 범위에서 최댓값 또는 최솟값을 빠르게 구해야할 때
 public class 모노톤_큐 {
     public int solution(int[] stones, int k) {
         Deque<Integer> deque = new LinkedList<>();
