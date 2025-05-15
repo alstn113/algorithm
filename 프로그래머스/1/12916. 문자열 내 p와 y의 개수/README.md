@@ -1,10 +1,10 @@
 # [level 1] 문자열 내 p와 y의 개수 - 12916 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12916?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12916) 
 
 ### 성능 요약
 
-메모리: 82.9 MB, 시간: 0.05 ms
+메모리: 84.2 MB, 시간: 3.82 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 12일 17:38:36
+2025년 05월 15일 21:31:28
 
 ### 문제 설명
 
