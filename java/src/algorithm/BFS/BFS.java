@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Queue;
 
 // 시간 복잡도: O(V + E) - V: 정점의 수, E: 간선의 수
+// 문제 유형
+// 1. 최단 거리 구하기
+// 2. 다수의 시작점 -> 퍼져나가는 시뮬레이션
+// 3. 단계별로 퍼지는 문제
+// 4. 최단 거리 + 경로 복원
+// 5. 가중치가 모두 1인 그래프
 public class BFS {
 
     static boolean[] visited = new boolean[9];
