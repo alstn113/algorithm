@@ -33,26 +33,26 @@ public class 크루스칼 {
 
         // 간선 정보 입력 받기
         for (int i = 0; i < E; i++) {
-            int a = INPUT[i][0];
-            int b = INPUT[i][1];
-            int distance = INPUT[i][2];
+            int from = INPUT[i][0];
+            int to = INPUT[i][1];
+            int weight = INPUT[i][2];
 
-            edges.add(new Edge(a, b, distance));
+            edges.add(new Edge(from, to, weight));
         }
 
         // 간선의 비용을 기준으로 오름차순 정렬
-        edges.sort((a, b) -> a.getDistance() - b.getDistance());
+        edges.sort((a, b) -> a.weight - b.weight);
 
         for (Edge edge : edges) {
-            int a = edge.getNodeA();
-            int b = edge.getNodeB();
-            int distance = edge.getDistance();
+            int from = edge.from;
+            int to = edge.to;
+            int weight = edge.weight;
 
             // 사이클이 발생하지 않는 경우에만 집합에 포함
             // 간선의 노드에 대해서 union 하기 전에 parent 가 같다면 사이클이 발생한다는 의미
-            if (findParent(a) != findParent(b)) {
-                unionParent(a, b);
-                result += distance;
+            if (findParent(from) != findParent(to)) {
+                unionParent(from, to);
+                result += weight;
             }
         }
 
@@ -81,25 +81,13 @@ public class 크루스칼 {
 
 class Edge {
 
-    private final int nodeA;
-    private final int nodeB;
-    private final int distance;
+    int from;
+    int to;
+    int weight;
 
-    public Edge(int nodeA, int nodeB, int distance) {
-        this.nodeA = nodeA;
-        this.nodeB = nodeB;
-        this.distance = distance;
-    }
-
-    public int getNodeA() {
-        return nodeA;
-    }
-
-    public int getNodeB() {
-        return nodeB;
-    }
-
-    public int getDistance() {
-        return distance;
+    public Edge(int from, int to, int weight) {
+        this.from = from;
+        this.to = to;
+        this.weight = weight;
     }
 }

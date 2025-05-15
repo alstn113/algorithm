@@ -5,7 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
-// 가중치가 있는 그래프에서 특정 노드에서 다른 모든 노드로의 최단 경로를 계산하는 알고리즘
+// 가중치가 있는 그래프에서 특정 노드에서 다른 모든 노드들로의 최단 경로를 계산하는 알고리즘
+
+// 유형
+// BFS 는 모두 1인 또는 동일한 가중치가 있는 그래프에서 최단 경로를 찾는 데 사용
+// 다익스트라 알고리즘은 양의 가중치가 있을 때 사용하고 우선순위 큐를 사용
+// 네트워크 비용, 도로 거리, 배송 경로 등
 public class 다익스트라 {
 
     static final int INF = (int) 1e9;

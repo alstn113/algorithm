@@ -1,43 +1,41 @@
 package algorithm.순열과_조합;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-// nCr = n! / r! * (n - r)!
+// nCr = n! / (r!(n - r)!)
 // n개의 원소 중 r개를 뽑는 경우의 수 (순서 상관 없음)
 public class 조합 {
 
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4};
+        int[] input = {1, 2, 3, 4};
         int r = 2;
 
-        List<List<Integer>> result = combination(arr, r);
-
-        System.out.println("조합 결과: " + result);
-        System.out.println("총 경우의 수: " + result.size());
-    }
-
-    public static List<List<Integer>> combination(int[] arr, int r) {
         List<List<Integer>> result = new ArrayList<>();
+        backtrack(input, r, 0, new ArrayList<>(), result);
 
-        dfs(arr, r, result, new ArrayList<>(), 0);
-
-        return result;
+        // 출력
+        for (List<Integer> comb : result) {
+            System.out.println(comb);
+        }
     }
 
-    public static void dfs(int[] arr, int r, List<List<Integer>> result, List<Integer> current, int startIndex) {
-        if (current.size() == r) {
-            result.add(new ArrayList<>(current));
+    private static void backtrack(
+            int[] input,
+            int r,
+            int start,
+            List<Integer> temp,
+            List<List<Integer>> result
+    ) {
+        if (temp.size() == r) {
+            result.add(new ArrayList<>(temp));
             return;
         }
 
-        for (int i = startIndex; i < arr.length; i++) {
-            current.add(arr[i]);
-
-            dfs(arr, r, result, current, i + 1);
-
-            current.removeLast();
+        for (int i = start; i < input.length; i++) {
+            temp.add(input[i]);
+            backtrack(input, r, i + 1, temp, result); // i + 1로 다음 인덱스로 진행
+            temp.remove(temp.size() - 1);             // 백트래킹
         }
     }
 }

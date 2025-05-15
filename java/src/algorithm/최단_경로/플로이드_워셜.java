@@ -2,7 +2,8 @@ package algorithm.최단_경로;
 
 import java.util.*;
 
-// 모든 노드에서 다른 모든 노드로 가는 최단 경로를 계산하는 알고리즘
+// 모든 노드에서 모든 노드로 가는 최단 경로를 구하는 알고리즘
+// 음의 가중치 가능, 음의 사이클은 불가능 O(N^3)
 public class 플로이드_워셜 {
 
     public static final int INF = (int) 1e9;
