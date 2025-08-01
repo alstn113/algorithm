@@ -45,9 +45,30 @@ sortedList.sort((o1, o2) -> maxMap.get(o2) - maxMap.get(o1));
 ---
 
 a를 b로 나누고 올림한 값 -> (a + b - 1) / b
-
+특정 개수를 세기 위한 값 10장씩 읽을 때 40장은 4장, 48장은 5장
 ---
 
 동일한 집합에 대해서 중복 제거 Set<Set<String>> 으로 가능
 
 ---
+
+문자 <-> 숫자 쉽게 변환
+ex) char c = '3'; int num = c - '0'; // num = 3
+ex) int num = 3; char c = (char) (num + '0'); // c = '3'
+
+---
+
+정수 타입 리스트 정렬 후 정수 배열로 변환
+int[] arr = list.stream().sorted().mapToInt(i -> i).toArray();
+
+---
+
+키를 기준으로 정렬하고, 값을 가져오기
+값으로 정렬하고 키를 가져올 수 있음.
+```java
+dic.entrySet().stream()
+    .sorted((o1, o2) -> o2.getValue() - o1.getValue())
+    .map(Entry::getKey)
+    .mapToInt(k -> k)
+    .toArray();
+```
