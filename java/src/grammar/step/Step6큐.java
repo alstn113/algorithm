@@ -1,6 +1,7 @@
 package grammar.step;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Step6큐 {
 
@@ -8,7 +9,7 @@ public class Step6큐 {
         // 큐(Queue) : FIFO(First In First Out) 구조
         // offer 추가, poll 제거, peek 확인 메서드 사용 (예외 처리 필요 없음)
         // add 추가, remove 제거, element 확인 메서드 사용 (예외 처리 필요)
-        java.util.Queue<String> queue = new LinkedList<>();
+        Queue<String> queue = new LinkedList<>();
         queue.add("apple");
         queue.add("banana");
         queue.add("kiwi");

@@ -33,13 +33,13 @@ public class Step3리스트 {
         List<String> strList = new ArrayList<>(Arrays.asList(strArray));
 
         // 리스트를 문자열 타입 배열로 변환
-        String[] strArray2 = strList.toArray(new String[0]);
+        String[] strArray2 = strList.toArray(String[]::new);
 
         // 정수 배열을 리스트로 변환
         int[] intArray = {1, 2, 3};
         List<Integer> intList = Arrays.stream(intArray)
                 .boxed()
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // 코딩테스트에서 toList()는 지원하지 않는 경우가 많음
         // int[]를 List<Integer>로 변환
         // 위는 불변, collect(Collectors.toList())는 가변
 

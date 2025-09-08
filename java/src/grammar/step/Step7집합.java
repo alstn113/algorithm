@@ -1,6 +1,7 @@
 package grammar.step;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class Step7집합 {
 
@@ -12,7 +13,7 @@ public class Step7집합 {
         // set1.removeAll(set2) : 차집합
         // set1.retainAll(set2) : 교집합
 
-        java.util.Set<String> set = new HashSet<>();
+        Set<String> set = new HashSet<>();
         set.add("apple");
         set.add("banana");
         set.add("kiwi");

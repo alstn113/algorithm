@@ -1,5 +1,7 @@
 package grammar.step;
 
+import java.util.Stack;
+
 public class Step5스택 {
 
     public static void main(String[] args) {
@@ -12,7 +14,7 @@ public class Step5스택 {
         // isEmpty() : 스택이 비어있는지 확인
         // size() : 스택의 크기를 반환
 
-        java.util.Stack<String> stack = new java.util.Stack<>();
+        Stack<String> stack = new Stack<>();
         stack.push("apple");
         stack.push("banana");
         stack.push("kiwi");

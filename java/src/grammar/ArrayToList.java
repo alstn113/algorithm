@@ -1,6 +1,7 @@
 package grammar;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ArrayToList {
 
@@ -32,7 +33,7 @@ public class ArrayToList {
 
         int[] arr3 = {1, 2, 3};
         // List -> Array
-        List<Integer> list3 = Arrays.stream(arr3).boxed().toList();
+        List<Integer> list3 = Arrays.stream(arr3).boxed().collect(Collectors.toList());
 
         // Array -> List
         int[] arr4 = list3.stream().mapToInt(i -> i).toArray();
