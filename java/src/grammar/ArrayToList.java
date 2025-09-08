@@ -13,7 +13,7 @@ public class ArrayToList {
         List<String> list = new ArrayList<>(Arrays.asList(arr1));
 
         // List -> Array
-        String[] arr2 = list.toArray(new String[0]);
+        String[] arr2 = list.toArray(String[]::new);
 
         // List, Array -> Join
         String str1 = String.join(", ", list);

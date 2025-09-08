@@ -30,6 +30,7 @@ public class HashSetEx {
 
         // 보유 여부
         System.out.println(set1.contains(1)); // true
+        // containsAll : 모든 요소가 포함되어 있는지 확인
 
         // 요소 개수
         System.out.println(set1.size()); // 3

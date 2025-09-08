@@ -3,6 +3,7 @@ package grammar.step;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Step3리스트 {
 
@@ -38,7 +39,8 @@ public class Step3리스트 {
         int[] intArray = {1, 2, 3};
         List<Integer> intList = Arrays.stream(intArray)
                 .boxed()
-                .toList(); // int[]를 List<Integer>로 변환
+                .collect(Collectors.toList());
+        // int[]를 List<Integer>로 변환
         // 위는 불변, collect(Collectors.toList())는 가변
 
         // 정수 리스트를 배열로 변환

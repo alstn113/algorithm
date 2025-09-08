@@ -32,6 +32,8 @@ public class ListEx {
 
         // 요소 삭제
         list1.remove(0);
+        // 숫자 요소 삭제 시 - remove int면 인덱스, Integer면 값
+        // list1.remove(Integer.valueOf(1));
 
         // 요소 비우기
         // list1.clear();
