@@ -12,9 +12,7 @@ class Solution {
         }
 
         Arrays.sort(nodes, (o1, o2) -> {
-            if (o1.y == o2.y) {
-                return o1.x - o2.x;
-            }
+
             return o2.y - o1.y;
         });
 
