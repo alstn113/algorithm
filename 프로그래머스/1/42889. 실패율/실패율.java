@@ -1,43 +1,47 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 class Solution {
     public int[] solution(int N, int[] stages) {
-        Map<Integer, Integer> dic = new HashMap<>();
+        // 도달 but not clear / 도달
+        int players = stages.length;
+        int[] dodal = new int[N + 2];
         for (int s : stages) {
-            dic.put(s, dic.getOrDefault(s, 0) + 1);
+            dodal[s] += 1;
         }
 
-        List<Stage> stageList = new ArrayList<>();
-        int sum = stages.length;
-        for (int i=1; i<=N; i++) {
-            int v = dic.getOrDefault(i, 0);
-            double failure;
-            if (v == 0) {
-                failure = 0;
-                System.out.println(failure);
+        List<Failure> result = new ArrayList<>();
+
+        for (int i = 1; i <= N; i++) {
+            if (dodal[i] == 0 || players == 0) {
+                result.add(new Failure(i, 0));
             } else {
-                failure = (double) v / sum;
-                System.out.println(v + " " + sum);
+                result.add(new Failure(i, (double) dodal[i] / players));
             }
-            sum -= v;
-
-            stageList.add(new Stage(i, failure));
+            players -= dodal[i];
         }
 
-        return stageList.stream()
-                .sorted((o1, o2) -> Double.compare(o2.failure, o1.failure))
-                .mapToInt(s -> s.stage)
-                .toArray();
+        result.sort((o1, o2) -> {
+            if (o1.failureRate == o2.failureRate) {
+                return o1.stage - o2.stage;
+            }
+            return Double.compare(o2.failureRate, o1.failureRate);
+        });
+
+        int[] answer = new int[N];
+        for (int i = 0; i < result.size(); i++) {
+            answer[i] = result.get(i).stage;
+        }
+        return answer;
     }
-}
 
-class Stage {
+    class Failure {
+        int stage;
+        double failureRate;
 
-    public int stage;
-    public double failure;
-
-    public Stage(int stage, double failure) {
-        this.stage = stage;
-        this.failure = failure;
+        public Failure(int stage, double failureRate) {
+            this.stage = stage;
+            this.failureRate = failureRate;
+        }
     }
 }

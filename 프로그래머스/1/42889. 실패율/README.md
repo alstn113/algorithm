@@ -1,14 +1,14 @@
 # [level 1] 실패율 - 42889 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42889?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42889) 
 
 ### 성능 요약
 
-메모리: 106 MB, 시간: 61.66 ms
+메모리: 84.5 MB, 시간: 5.23 ms
 
 ### 구분
 
-코딩테스트 연습 > 2019 KAKAO BLIND RECRUITMENT
+코딩테스트 연습 > 2019 KAKAO BLIND RECRUITMENT
 
 ### 채점결과
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 14일 00:22:38
+2025년 09월 13일 12:21:35
 
 ### 문제 설명
 
