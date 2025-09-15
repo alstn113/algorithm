@@ -1,14 +1,14 @@
 # [level 2] 오픈채팅방 - 42888 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42888?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42888) 
 
 ### 성능 요약
 
-메모리: 176 MB, 시간: 134.40 ms
+메모리: 334 MB, 시간: 457.05 ms
 
 ### 구분
 
-코딩테스트 연습 > 2019 KAKAO BLIND RECRUITMENT
+코딩테스트 연습 > 2019 KAKAO BLIND RECRUITMENT
 
 ### 채점결과
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 21일 15:59:07
+2025년 09월 15일 12:23:33
 
 ### 문제 설명
 
