@@ -1,14 +1,14 @@
 # [level 2] 후보키 - 42890 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42890?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42890) 
 
 ### 성능 요약
 
-메모리: 88.5 MB, 시간: 3.92 ms
+메모리: 73 MB, 시간: 4.87 ms
 
 ### 구분
 
-코딩테스트 연습 > 2019 KAKAO BLIND RECRUITMENT
+코딩테스트 연습 > 2019 KAKAO BLIND RECRUITMENT
 
 ### 채점결과
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 28일 19:11:30
+2025년 09월 17일 11:01:27
 
 ### 문제 설명
 
