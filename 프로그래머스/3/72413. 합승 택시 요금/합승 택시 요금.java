@@ -1,56 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class Solution {
 
     int INF = (int) 1e9;
 
     public int solution(int n, int s, int a, int b, int[][] fares) {
-        // n은 노드 개수
-        // s: start, a, b: end
-        // fares
-
-        List<List<int[]>> graph = new ArrayList<>();
-        for (int i = 0; i <= n; i++) {
-            graph.add(new ArrayList<>());
-        }
-
-        int[][] map = new int[n + 1][n + 1];
+        int[][] graph = new int[n + 1][n + 1];
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
-                if (i == j) {
-                    map[i][j] = 0;
-                } else {
-                    map[i][j] = INF;
+                if (i != j) {
+                    graph[i][j] = (int) 1e9;
                 }
             }
         }
 
         for (int[] fare : fares) {
-            int start = fare[0];
-            int end = fare[1];
+            int from = fare[0];
+            int to = fare[1];
             int weight = fare[2];
 
-            map[start][end] = weight;
-            map[end][start] = weight;
+            graph[from][to] = weight;
+            graph[to][from] = weight;
         }
 
         for (int k = 1; k <= n; k++) {
             for (int i = 1; i <= n; i++) {
                 for (int j = 1; j <= n; j++) {
-                    map[i][j] = Math.min(map[i][j], map[i][k] + map[k][j]);
+                    graph[i][j] = Math.min(graph[i][j], graph[i][k] + graph[k][j]);
                 }
             }
         }
 
-        int result = (int) 1e9;
+        int min = (int) 1e9;
         for (int i = 1; i <= n; i++) {
-            if (map[i][s] == INF || map[i][a] == INF || map[i][b] == INF) {
+            if (graph[i][s] == INF || graph[i][a] == INF || graph[i][b] == INF) {
                 continue;
             }
-            result = Math.min(result, map[i][s] + map[i][a] + map[i][b]);
+            min = Math.min(min, graph[i][s] + graph[i][a] + graph[i][b]);
         }
 
-        return result;
+        return min;
     }
 }
