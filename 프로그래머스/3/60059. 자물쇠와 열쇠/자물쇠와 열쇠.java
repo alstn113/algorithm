@@ -1,55 +1,65 @@
 class Solution {
 
-    int M;
-    int N;
+    // key 관련
+    int n;
+    int m;
 
     public boolean solution(int[][] key, int[][] lock) {
-        M = key.length;
-        N = lock.length;
+        n = key.length;
+        m = key[0].length;
 
-        for (int i = 0; i < 4; i++) {
-            key = rotate(key);
+        for (int c = 0; c < 4; c++) {
+            // xy offset 구하기
+            for (int i = -n + 1; i <= lock.length - 1; i++) {
+                for (int j = -m + 1; j <= lock[0].length - 1; j++) {
 
-            for (int x = -M + 1; x < N; x++) {
-                for (int y = -M + 1; y < N; y++) {
-                    if (check(key, lock, x, y)) {
+                    boolean flag = false;
+                    for (int x = 0; x < lock.length; x++) {
+                        for (int y = 0; y < lock[0].length; y++) {
+                            int keyValue = 0;
+                            if (x - i >= 0 && x - i < n && y - j >= 0 && y - j < m) {
+                                keyValue = key[x - i][y - j];
+                            }
+
+                            if (lock[x][y] + keyValue != 1) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            break;
+                        }
+                    }
+
+                    if (!flag) {
                         return true;
                     }
                 }
             }
+
+            // 회전
+            key = rotate(key);
         }
 
         return false;
     }
 
-    public boolean check(int[][] key, int[][] lock, int xOffset, int yOffset) {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                int keyVal = 0;
-                int keyI = i - xOffset;
-                int keyJ = j - yOffset;
-                
-                if (0 <= keyI && keyI < M && 0 <= keyJ && keyJ < M) {
-                    keyVal = key[keyI][keyJ];
-                }
-                
-                if (lock[i][j] + keyVal != 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public int[][] rotate(int[][] cur) {
-        int[][] newKey = new int[M][M];
-
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < M; j++) {
-                newKey[j][M - 1 - i] = cur[i][j];
+    public int[][] rotate(int[][] key) {
+        int[][] map = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                map[i][j] = key[j][i];
             }
         }
 
-        return newKey;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m / 2; j++) {
+                int temp = map[i][j];
+                map[i][j] = map[i][m - 1 - j];
+                map[i][m - 1 - j] = temp;
+            }
+        }
+
+        return map;
     }
 }
