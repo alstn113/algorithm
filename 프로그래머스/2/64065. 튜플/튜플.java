@@ -1,27 +1,25 @@
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import javax.xml.transform.sax.SAXResult;
 
 class Solution {
     public int[] solution(String s) {
-        s = s.substring(2, s.length() - 2);
-        String[] split = s.split("},\\{", -1);
-        Map<Integer, Integer> dic = new HashMap<>();
+        String newStr = s.substring(2, s.length() - 2);
+        String[] split = newStr.split("}.\\{");
 
+        Map<Integer, Integer> map = new HashMap<>();
         for (String v : split) {
-            String[] arrSplit = v.split(",", -1);
-            for (String as : arrSplit) {
-                int a = Integer.parseInt(as);
-                dic.put(a, dic.getOrDefault(a, 0) + 1);
+            String[] ssplit = v.split(",");
+            for (String k : ssplit) {
+                int vv = Integer.parseInt(k);
+                map.put(vv, map.getOrDefault(vv, 0) + 1);
             }
         }
 
-        return dic.entrySet().stream()
-                .sorted((o1, o2) -> o2.getValue() - o1.getValue())
-                .map(Entry::getKey)
-                .mapToInt(k -> k)
-                .toArray();
+        int[] result = new int[split.length];
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            result[split.length - entry.getValue()] = entry.getKey();
+        }
+
+        return result;
     }
 }
