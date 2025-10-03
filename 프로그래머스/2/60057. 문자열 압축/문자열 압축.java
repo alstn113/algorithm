@@ -1,40 +1,36 @@
 class Solution {
     public int solution(String s) {
-        int result = s.length();
-        for (int i = 1; i <= s.length() / 2; i++) {
-            int total = 0;
-            String first = s.substring(0, i);
-            int cnt = 1;
-            for (int k = 1; k < s.length() / i; k++) {
-                String next = s.substring(k * i, k * i + i);
-                if (first.equals(next)) {
-                    cnt += 1;
-                } else {
-                    total += i;
-                    if (cnt > 1) {
-                        total += String.valueOf(cnt).length();
-                    }
+        int len = s.length();
+        int result = len;
+        for (int i = 1; i <= len / 2; i++) {
+            int cnt = 0;
 
-                    first = next;
-                    cnt = 1;
+            String tmp = s.substring(0, i);
+            int sameCnt = 1;
+
+            for (int k = 1; k < len / i; k++) {
+                String cur = s.substring(k * i, k * i + i);
+                if (tmp.equals(cur)) {
+                    sameCnt += 1;
+                } else {
+                    if (sameCnt > 1) {
+                        cnt += String.valueOf(sameCnt).length();
+                    }
+                    cnt += i;
+                    sameCnt = 1;
+                    tmp = cur;
                 }
             }
 
-            total += i;
-            if (cnt > 1) {
-                total += String.valueOf(cnt).length();
+            if (sameCnt > 1) {
+                cnt += String.valueOf(sameCnt).length();
             }
+            cnt += i;
 
-            total += s.length() % i;
-
-            result = Math.min(result, total);
+            cnt += len % i;
+            result = Math.min(result, cnt);
         }
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        Solution s = new Solution();
-        System.out.println(s.solution("ababcdcdababcdcd"));
     }
 }
