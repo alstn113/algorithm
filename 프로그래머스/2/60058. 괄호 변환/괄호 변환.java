@@ -1,44 +1,49 @@
 class Solution {
     public String solution(String p) {
-        if (p.isBlank() ) {
+        if (p.isBlank()) {
             return "";
         }
-         
-        int left = 0;
-        int right = 0;
-        boolean correct = true;
-        int i = 0;
-        while (i < p.length()) {
+        
+        int left=0;
+        int right=0;
+        boolean isCorrect = true;
+        
+        int t = 0;
+        for (int i=0; i<p.length(); i++) {
             if (p.charAt(i) == '(') {
                 left += 1;
             } else {
                 right += 1;
             }
-
-            if (right > left) {
-                correct = false;
+            
+            if (left < right) {
+                isCorrect = false;
             }
-            i += 1;
-
+            
             if (left == right) {
+                t = i;
                 break;
             }
         }
-
-        String u = p.substring(0, i);
-        String v = p.substring(i);
-        if (correct) {
-            return u + solution(v);
+        String u = p.substring(0, t+1);
+        String v = p.substring(t+1);
+        
+        if (isCorrect) {
+            String newStr =  u + solution(v);
+            return newStr;
         }
+        
+        u = u.substring(1, u.length() - 1);
         StringBuilder sb = new StringBuilder();
-        for (int j = 1; j < u.length() - 1; j++) {
-            if (u.charAt(j) == '(') {
+        for (int i=0; i<u.length(); i++) {
+            if (u.charAt(i) == '(') {
                 sb.append(")");
             } else {
                 sb.append("(");
             }
         }
-
-        return "(" + solution(v) + ")" + sb;
+        
+        String newStr =  "(" + solution(v) + ")" + sb.toString();
+        return newStr;
     }
 }
