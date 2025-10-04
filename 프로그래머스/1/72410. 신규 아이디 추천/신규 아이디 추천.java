@@ -1,50 +1,50 @@
 class Solution {
     public String solution(String new_id) {
         // 1
-        new_id = new_id.toLowerCase();
-
+        String s = new_id.toLowerCase();
+        
         // 2
         StringBuilder sb = new StringBuilder();
-        for (char c : new_id.toCharArray()) {
+        for (int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
             if (Character.isAlphabetic(c) || Character.isDigit(c) || c == '-' || c == '_' || c == '.') {
                 sb.append(c);
             }
         }
-        new_id = sb.toString();
-
+        s = sb.toString();
+        
         // 3
-        while (new_id.contains("..")) {
-            new_id = new_id.replace("..", ".");
+        while(s.contains("..")) {
+            s = s.replace("..", ".");
         }
-
+        
         // 4
-        if (new_id.startsWith(".")) {
-            new_id = new_id.substring(1);
+        if (s.startsWith(".")) {
+            s = s.substring(1);
         }
-
-        if (new_id.endsWith(".")) {
-            new_id = new_id.substring(0, new_id.length() - 1);
+        if (s.endsWith(".")) {
+            s = s.substring(0, s.length()-1);
         }
-
+        
         // 5
-        if (new_id.isBlank()) {
-            new_id = "a";
+        if (s.isBlank()) {
+            s = "a";
         }
-
+        
         // 6
-        if (new_id.length() >= 16) {
-            new_id = new_id.substring(0, 15);
+        if (s.length() >= 16) {
+            s = s.substring(0, 15);
         }
-
-        if (new_id.endsWith(".")) {
-            new_id = new_id.substring(0, new_id.length() - 1);
+        if (s.endsWith(".")) {
+            s = s.substring(0, s.length()-1);
         }
-
+        
         // 7
-        while (new_id.length() <= 2) {
-            new_id = new_id + new_id.charAt(new_id.length() - 1);
+        while(s.length() <= 2) {
+            char c = s.charAt(s.length() - 1);
+            s += c;
         }
-
-        return new_id;
+        
+        return s;
     }
 }
