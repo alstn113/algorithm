@@ -1,54 +1,56 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Solution {
     public int[] solution(int[] fees, String[] records) {
-        Map<String, Integer> ins = new HashMap<>();
-        Map<String, Integer> sum = new HashMap<>();
-        for (String r : records) {
-            String[] split = r.split(" ");
+        Map<String, Integer> inouts = new HashMap<>();
+        Map<String, Integer> st = new HashMap<>();
+        
+        for (String record : records) {
+            String[] split = record.split(" ");
             int time = getTime(split[0]);
-            String number = split[1];
+            String num = split[1];
             String action = split[2];
-
+            
             if (action.equals("IN")) {
-                ins.put(number, time);
+                inouts.put(num, time);
             } else {
-                int inTime = ins.get(number);
-                sum.put(number, sum.getOrDefault(number, 0) + time - inTime);
-                ins.remove(number);
+                int inTime = inouts.get(num);
+                inouts.remove(num);
+                st.put(num, st.getOrDefault(num, 0) + time - inTime);
             }
         }
+        
         int lastTime = getTime("23:59");
-        for (Map.Entry<String, Integer> entry : ins.entrySet()) {
-            String number = entry.getKey();
-            int inTime =  entry.getValue();
-            sum.put(number, sum.getOrDefault(number, 0) + lastTime - inTime);
+        for (Map.Entry<String, Integer> entry : inouts.entrySet()) {
+            String num = entry.getKey();
+            int inTime = entry.getValue();
+            
+            st.put(num, st.getOrDefault(num, 0) + lastTime - inTime);
         }
-
-        int dTime = fees[0];
-        int dFee = fees[1];
-        int unitTime = fees[2];
-        int unitFee = fees[3];
-
+        
         List<List<Integer>> result = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : sum.entrySet()) {
-            int fee = dFee;
-            if (entry.getValue() > dTime) {
-                fee += (int) (Math.ceil((double) (entry.getValue() - dTime) / unitTime) * unitFee);
+        for (Map.Entry<String, Integer> entry : st.entrySet()) {
+            int number = Integer.parseInt(entry.getKey());
+            System.out.println(number + " " + entry.getValue());
+            if (entry.getValue() <= fees[0]) {
+                result.add( List.of(number, fees[1]) );
+                continue;
             }
-            int carNum = Integer.parseInt(entry.getKey());
-            result.add(List.of(carNum, fee));
+         
+            int v = fees[1] + (int) (Math.ceil((double) (entry.getValue() - fees[0]) / fees[2]) * fees[3]);
+            result.add(List.of(number, v));
         }
-        result.sort((o1, o2) -> o1.get(0) - o2.get(0));
-
-        return result.stream().map(v -> v.get(1)).mapToInt(v -> v).toArray();
+        
+        result.sort((o1, o2) -> {
+            return o1.get(0) - o2.get(0);
+        });
+        return result.stream().map(v -> v.get(1)).mapToInt(i -> i).toArray();
     }
-
+    
     public int getTime(String time) {
         String[] split = time.split(":");
-        return Integer.parseInt(split[0]) * 60 + Integer.parseInt(split[1]);
+        int h = Integer.parseInt(split[0]) * 60;
+        int m = Integer.parseInt(split[1]);
+        return h + m;
     }
 }
