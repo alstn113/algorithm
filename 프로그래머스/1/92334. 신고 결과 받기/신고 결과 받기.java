@@ -1,35 +1,36 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 class Solution {
     public int[] solution(String[] id_list, String[] report, int k) {
-        Map<String, Set<String>> map = new HashMap<>();
-        Map<String, Integer> result = new HashMap<>();
+        Map<String, Set<String>> fromMap = new HashMap<>();
+        Map<String, Set<String>> toMap = new HashMap<>();
+        
         for (String id : id_list) {
-            map.put(id, new HashSet<>());
+            fromMap.put(id, new HashSet<>());
+            toMap.put(id, new HashSet<>());
         }
-
-        for (String r : report) {
-            String[] split = r.split(" ");
+        
+        for (String rp : report) {
+            String[] split = rp.split(" ");
             String from = split[0];
             String to = split[1];
-            map.get(to).add(from);
+            
+            fromMap.get(from).add(to); // 누가 누구를 신고했나?
+            toMap.get(to).add(from); // 누가 누구에게 신고당했나?
         }
-
-        for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
-            if (entry.getValue().size() >= k) {
-                for (String s : entry.getValue()) {
-                    result.put(s, result.getOrDefault(s, 0) + 1);
+        
+        int[] result = new int[id_list.length];
+        for (int i=0; i<result.length; i++) {
+            Set<String> reported = fromMap.get(id_list[i]);
+            int cnt = 0;
+            for (String r : reported) {
+                if(toMap.get(r).size() >= k) {
+                    cnt += 1;
                 }
             }
+            result[i] = cnt;
         }
-
-        int[] answer = new int[id_list.length];
-        for (int i = 0; i < id_list.length; i++) {
-            answer[i] = result.getOrDefault(id_list[i], 0);
-        }
-        return answer;
+        
+        return result;
     }
 }
