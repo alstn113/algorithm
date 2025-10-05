@@ -1,39 +1,48 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Solution {
     public int[] solution(String msg) {
-        Map<String, Integer> store = new HashMap<>();
+        // 가장 긴 일치 찾기
+        // 출력 및 입력 제거
+        // 처리되지 않은 글자 저장
+        
+        Map<String, Integer> map = new HashMap<>();
         String alpha = "0ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        for (int i = 1; i < alpha.length(); i++) {
-            String target = String.valueOf(alpha.charAt(i));
-            store.put(target, i);
+        int idx = 1;
+        while (idx < alpha.length()) {
+            map.put("" + alpha.charAt(idx), idx);
+            idx += 1;            
         }
-        int nextKey = alpha.length();
-
-        // ----
+        
+        // ---
+        
         List<Integer> result = new ArrayList<>();
-
-        int i = 1;
-        String temp = String.valueOf(msg.charAt(0));
-        while (i < msg.length()) {
-            String next = String.valueOf(msg.charAt(i));
-            String newTemp = temp + next;
-            if (!store.containsKey(newTemp)) {
-                result.add(store.get(temp));
-                store.put(newTemp, nextKey);
-                nextKey += 1;
-                temp = next;
-                i += 1;
-                continue;
-            }
-            temp = newTemp;
-            i += 1;
+        
+        int k=0;
+        String tmp = "";
+        while(k<msg.length()) {
+            String cur = "" + msg.charAt(k);
+            String target = tmp + msg.charAt(k);
+            if (map.containsKey(target)) {
+                tmp = target;
+                k += 1;
+            } else {
+                // KA는 target; 저장
+                map.put(target, idx);
+                idx += 1;
+                
+                // K는 tmp; 출력
+                result.add(map.get(tmp));
+            
+                // 
+                tmp = "";
+            }            
         }
-        result.add(store.get(temp));
-
+        
+        if (!tmp.isBlank()) {
+            result.add(map.get(tmp));
+        }
+        
         return result.stream().mapToInt(v -> v).toArray();
     }
 }
