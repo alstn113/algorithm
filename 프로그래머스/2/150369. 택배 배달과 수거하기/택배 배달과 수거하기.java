@@ -1,51 +1,53 @@
 class Solution {
     public long solution(int cap, int n, int[] deliveries, int[] pickups) {
-        long answer = 0;
-
-        int a = n - 1;
-        int b = n - 1;
-
-        while (true) {
-            // 최소 찾기
-            while (a > -1 && deliveries[a] == 0) {
-                a -= 1;
+        int di = n-1;
+        int pi = n-1;
+        long result = 0;
+        
+        while(true) {
+            // 마지막 인덱스에서 시작해서 0보다 큰 수가 나올 때까지 줄임. 
+            while(di > -1 && deliveries[di] == 0) {
+                di -= 1;
             }
-
-            while (b > -1 && pickups[b] == 0) {
-                b -= 1;
+            while(pi > -1 && pickups[pi] == 0) {
+                pi -= 1;
             }
-
-            if (a == -1 && b == -1) {
-                return answer;
+            
+            // 둘 다 -1이면 카운팅하지 않음.    
+            if (di == -1 && pi == -1) {
+                break;
             }
-
-            answer += (Math.max(a, b) + 1) * 2L;
-
-            // 줄이기
-            int av = cap;
-            int bv = cap;
-
-            while (a > -1 && av > 0) {
-                if (deliveries[a] >= av) {
-                    deliveries[a] -= av;
-                    av = 0;
+            
+            // delivery와 pickup의 최대 값 * 2를 result에 더하기.
+            int v = Math.max(di, pi) + 1;
+            result += v * 2;
+            
+            // cap 만큼 줄이기.
+            int dcap = cap;
+            while(di > -1 && dcap > 0) {
+                if (deliveries[di] > dcap) {
+                    deliveries[di] -= dcap;
+                    break;
                 } else {
-                    av -= deliveries[a];
-                    deliveries[a] = 0;
-                    a -= 1;
+                    dcap -= deliveries[di];
+                    deliveries[di] = 0;
+                    di -= 1;
                 }
             }
-
-            while (b > -1 && bv > 0) {
-                if (pickups[b] >= bv) {
-                    pickups[b] -= bv;
-                    bv = 0;
+            
+            int pcap = cap;
+            while(pi > -1 && pcap > 0) {
+                if (pickups[pi] > pcap) {
+                    pickups[pi] -= pcap;
+                    break;
                 } else {
-                    bv -= pickups[b];
-                    pickups[b] = 0;
-                    b -= 1;
+                    pcap -= pickups[pi];
+                    pickups[pi] = 0;
+                    pi -= 1;
                 }
             }
         }
+        
+        return result;
     }
 }
