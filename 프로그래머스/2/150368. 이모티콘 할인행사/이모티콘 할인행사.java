@@ -1,66 +1,68 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
+    
+    List<List<Integer>> sales = new ArrayList<>();
+    
     public int[] solution(int[][] users, int[] emoticons) {
-        // 할인율에 따라 모두 구매 10 20 30 40
-        // 이모티콘으로 모두 탐색
-        List<List<Integer>> arr = new ArrayList<>();
-        int[] sales = new int[]{10, 20, 30, 40};
-        int n = emoticons.length;
-        dfs(arr, sales, n, new ArrayList<>());
-
-        List<List<Integer>> result = new ArrayList<>();
-
-        // 이모티콘의 할인 경우의 수
-        for (int i = 0; i < arr.size(); i++) {
-            int service = 0;
-            int money = 0;
-
-            // 사용자 순회
-            for (int j = 0; j < users.length; j++) {
-                int saleLimit = users[j][0];
-                int moneyLimit = users[j][1];
-
+        // 이모티콘의 할인율에 따라서 구매 여부가 결정됨.
+        // 특정 구매 금액을 넘으면 이모티콘 플러스를 구매함.
+        // 이모티콘 플러스 사용자를 늘려야 함.
+        // 결국 이모티콘 플러스 다음 매출액 순으로 결과를 모아야 함.
+        // 이모티콘 할인율은 10 20 30 40
+        
+        // 모든 종류의 이모티콘 할인율 계산
+        dfs(emoticons.length, new ArrayList<>());
+        
+        int plusCnt = 0;
+        int saleAmount = 0;
+        
+        for (List<Integer> sale : sales) {
+            int curPlus = 0;
+            int curSaleAmount = 0;
+            
+            for (int[] user : users) {
                 int sum = 0;
-                // 이모티콘 순회
-                for (int k = 0; k < n; k++) {
-                    int targetSale = arr.get(i).get(k);
-                    if (saleLimit <= targetSale) {
-                        sum += emoticons[k] - (emoticons[k] * targetSale / 100);
-                    }
+                int saleLimit = user[0];
+                int saleAmountLimit = user[1];
+                
+                for (int i=0; i<emoticons.length; i++) {
+                    if (sale.get(i) >= saleLimit) {
+                        sum += emoticons[i] - emoticons[i] * sale.get(i) * 0.01; 
+                    }                    
                 }
-                if (sum >= moneyLimit) {
-                    service += 1;
+                
+                if (sum >= saleAmountLimit) {
+                    curPlus += 1;
                 } else {
-                    money += sum;
+                    curSaleAmount += sum;
                 }
             }
             
-            result.add(List.of(service, money));
-        }
-
-        result.sort((o1, o2) -> {
-            if (o1.get(0).equals(o2.get(0))) {
-                return o2.get(1) - o1.get(1);
+            // 플러스 비교, 같으면 매출 비교
+            if (curPlus > plusCnt) {
+                plusCnt = curPlus;
+                saleAmount = curSaleAmount;
+            } else if (curPlus == plusCnt) {
+                if (curSaleAmount > saleAmount) {
+                    saleAmount = curSaleAmount;
+                }
             }
-            return o2.get(0) - o1.get(0);
-        });
-
-        List<Integer> answer = result.get(0);
-        return new int[]{answer.get(0), answer.get(1)};
+        }
+        
+        return new int[] {plusCnt, saleAmount};
     }
-
-    public void dfs(List<List<Integer>> arr, int[] sales, int n, List<Integer> cur) {
+    
+    public void dfs(int n, List<Integer> cur) {
         if (cur.size() == n) {
-            arr.add(new ArrayList<>(cur));
+            sales.add(new ArrayList<>(cur));
             return;
         }
-
-        for (int s : sales) {
-            cur.add(s);
-            dfs(arr, sales, n, new ArrayList<>(cur));
+        
+        for (int i=0; i<4; i++) {
+            cur.add((i+1) * 10);
+            dfs(n, cur);
             cur.remove(cur.size() - 1);
         }
     }
-}
+ }
