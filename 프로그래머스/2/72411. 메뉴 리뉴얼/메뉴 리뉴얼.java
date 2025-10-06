@@ -1,50 +1,52 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Solution {
     public String[] solution(String[] orders, int[] course) {
         List<String> result = new ArrayList<>();
-
-        for (int c : course) {
+        
+        for (int co : course) { // 2, 3, 4 ...
             Map<String, Integer> map = new HashMap<>();
-
+            
             for (String order : orders) {
-                if (order.length() < c) {
+                if (order.length() < co) {
                     continue;
                 }
-
-                String[] split = order.split("");
-                Arrays.sort(split);
-
-                dfs(map, 0, "", split, c);
+                char[] charArray = order.toCharArray();
+                Arrays.sort(charArray);
+                dfs(charArray, map, co, "", 0);
             }
-
-            int max = 2;
+            
+            List<String> tmp = new ArrayList<>();
+            int max=0;
             for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                max = Math.max(entry.getValue(), max);
-            }
-
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                if (entry.getValue() < 2) {
+                    continue;
+                }
+                
                 if (entry.getValue() == max) {
-                    result.add(entry.getKey());
+                    tmp.add(entry.getKey());
+                } else if (entry.getValue() > max) {
+                    max = entry.getValue();
+                    tmp = new ArrayList<>();
+                    tmp.add(entry.getKey());
                 }
             }
+            result.addAll(tmp);
         }
-
-        return result.stream().sorted().toArray(String[]::new);
+        
+        Collections.sort(result);
+        return result.toArray(String[]::new);
     }
-
-    public void dfs(Map<String, Integer> map, int startIdx, String cur, String[] str, int limit) {
-        if (cur.length() == limit) {
+    
+    public void dfs(char[] charArray, Map<String, Integer> map, int co, String cur, int startIdx) {
+        if (cur.length() == co) {
             map.put(cur, map.getOrDefault(cur, 0) + 1);
             return;
         }
-
-        for (int i = startIdx; i < str.length; i++) {
-            dfs(map, i + 1, cur + str[i], str, limit);
+        
+        for (int i=startIdx; i<charArray.length; i++) {
+            String next = cur + charArray[i];
+            dfs(charArray, map, co, next, i+1);
         }
     }
 }
