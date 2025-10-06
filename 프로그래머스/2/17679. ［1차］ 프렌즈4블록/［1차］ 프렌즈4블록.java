@@ -1,73 +1,74 @@
-import java.util.Arrays;
-
 class Solution {
     public int solution(int m, int n, String[] board) {
-        char[][] map = new char[m][n];
-        for (int i = 0; i < m; i++) {
-            map[i] = board[i].toCharArray();
+        char[][] b = new char[m][n];
+        for (int i=0; i<m; i++) {
+            b[i] = board[i].toCharArray();
         }
-
-        while (true) {
-            boolean isBombed = false;
-            char[][] newBoard = new char[m][n];
-            for (int i = 0; i < m; i++) {
-                newBoard[i] = Arrays.copyOf(map[i], n);
+        int result = 0;
+    
+        while(true) {
+            // 동일한 판 복사
+            char[][] nb = new char[m][n];
+            for (int i=0; i<m; i++) {
+                for (int j=0; j<n; j++) {
+                    nb[i][j] = b[i][j];
+                }
             }
-
-            for (int i = 1; i < m; i++) {
-                for (int j = 1; j < n; j++) {
-                    char target = map[i][j];
-                    if (target == '#') {
-                        continue;
-                    }
-                    if (target == map[i - 1][j] && target == map[i][j - 1] && target == map[i - 1][j - 1]) {
-                        isBombed = true;
-                        newBoard[i][j] = '#';
-                        newBoard[i - 1][j] = '#';
-                        newBoard[i][j - 1] = '#';
-                        newBoard[i - 1][j - 1] = '#';
+            
+            // 같은거 찾기
+            for (int i=1; i<m; i++) {
+                for (int j=1; j<n; j++) {
+                    char c = b[i][j];
+                    
+                    if (c == '#') continue;
+                    
+                    char c1 = b[i][j-1];
+                    char c2 = b[i-1][j];
+                    char c3 = b[i-1][j-1];
+                    
+                    if (c == c1 && c == c2 && c == c3) {
+                        nb[i][j] = '@';
+                        nb[i-1][j] = '@';
+                        nb[i][j-1] = '@';
+                        nb[i-1][j-1] = '@';
                     }
                 }
             }
-
-            if (!isBombed) {
+            
+            // 마킹한 것 빈 칸으로 변경
+            int tmp = 0;
+            for (int i=0; i<m; i++) {
+                for (int j=0; j<n; j++) {
+                    if (nb[i][j] == '@') {
+                        tmp += 1;
+                        nb[i][j] = '#';
+                    }
+                }
+            }
+            if(tmp == 0) {
                 break;
             }
-
-            // 아래로 내리기
-            for (int i = 0; i < n; i++) { // 열
-                for (int j = m - 2; j > -1; j--) { // 행
-                    int curIdx = j;
-                    char current = newBoard[j][i];
-
-                    if (current == '#') {
-                        continue;
+            result += tmp;
+            
+            
+            // 아이템 내리기
+            for (int i=0; i<n; i++) { 
+                for (int j=m-2; j>-1; j--) {
+                    int targetIdx = j+1;
+                    while(targetIdx < m && nb[targetIdx][i] == '#') {
+                        targetIdx += 1;
                     }
-
-                    while (curIdx < m - 1) {
-                        if (newBoard[curIdx + 1][i] == '#') {
-                            newBoard[curIdx][i] = '#';
-                            newBoard[curIdx + 1][i] = current;
-                            curIdx += 1;
-                        } else {
-                            break;
-                        }
-                    }
+                    
+                    char cur = nb[j][i];
+                    nb[j][i] = nb[targetIdx-1][i];
+                    nb[targetIdx-1][i] = cur;
                 }
             }
-
-            map = newBoard;
+            
+            // 판 교체
+            b = nb;
         }
-
-        int result = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (map[i][j] == '#') {
-                    result += 1;
-                }
-            }
-        }
-
+        
         return result;
     }
 }
