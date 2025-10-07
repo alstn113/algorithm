@@ -1,60 +1,52 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 class Solution {
-    String[][] r;
-
+    Set<Set<Integer>> set = new HashSet<>();
+    
     public int solution(String[][] relation) {
         int n = relation[0].length;
-        r = relation;
-        List<Set<Integer>> a = new ArrayList<>();
-        for (int i = 1; i <= n; i++) {
-            List<Set<Integer>> all = new ArrayList<>();
-            dfs(n, i, 0, new HashSet<>(), all);
-            for (Set<Integer> k : all) {
-                boolean flag = false;
-                for (Set<Integer> v : a) {
-                    if (k.containsAll(v)) {
-                        flag = true;
-                        break;
-                    }
-
-                }
-                if (!flag && check(k)) {
-                    a.add(k);
+        
+        // 컬럼 개수마다 검증
+        for (int i=1; i<=n; i++) {
+            dfs(i, relation, new ArrayList<>(), 0);
+        }    
+        return set.size();
+    }
+    
+            
+    // contains all로 최소성 확인
+    // Set 안에 key를 넣어서 확인
+    public void dfs(int n, String[][] relation, List<Integer> cur, int startIdx) {
+        if (n == cur.size()) {
+            Set<Integer> tmp = new HashSet<>(cur);
+            boolean flag = false;
+            for (Set<Integer> s : set) {
+                if (tmp.containsAll(s)) {
+                    flag = true;
+                    break;
                 }
             }
-        }
-        return a.size();
-    }
-
-    public void dfs(int n, int limit, int startIdx, Set<Integer> arr, List<Set<Integer>> all) {
-        if (arr.size() == limit) {
-            all.add(new HashSet<>(arr));
+            if (flag) return;
+            
+            Set<String> keys = new HashSet<>();
+            for (String[] r : relation) {
+                StringBuilder sb = new StringBuilder();
+                for (int idx : cur) {
+                    sb.append(r[idx]).append(" ");
+                }
+                keys.add(sb.toString());
+            }
+            if (keys.size() == relation.length) {
+                set.add(new HashSet<>(cur));
+            }
+            
             return;
         }
-
-        for (int i = startIdx; i < n; i++) {
-            arr.add(i);
-            dfs(n, limit, i + 1, arr, all);
-            arr.remove(i);
+        
+        for (int i=startIdx; i<relation[0].length; i++) {
+            cur.add(i);
+            dfs(n, relation, new ArrayList<>(cur), i+1);
+            cur.remove(cur.size()-1);
         }
-    }
-
-    public boolean check(Set<Integer> arr) {
-        int total = r.length;
-
-        Set<String> set = new HashSet<>();
-        for (String[] s : r) {
-            StringBuilder sb = new StringBuilder();
-            for (int i : arr) {
-                sb.append(s[i]).append(" ");
-            }
-            set.add(sb.toString());
-        }
-
-        return set.size() == total;
     }
 }
