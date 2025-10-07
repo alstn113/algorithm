@@ -1,78 +1,84 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
+    // nodeinfo [열,행]
     public int[][] solution(int[][] nodeinfo) {
-        // 높이로 정렬
-        List<Node> arr = new ArrayList<>();
-        for (int i = 0; i < nodeinfo.length; i++) {
-            arr.add(new Node(i + 1, nodeinfo[i][0], nodeinfo[i][1], null, null));
+        List<Node> nodes = new ArrayList<>();
+        int n = nodeinfo.length;
+        
+        for (int i=0; i<n; i++) {
+            int x = nodeinfo[i][0];
+            int y = nodeinfo[i][1];
+            Node node = new Node(x, y, i+1, null, null);    
+            nodes.add(node);
         }
-        arr.sort((o1, o2) -> o2.y - o1.y);
-
-        Node root = arr.get(0);
-        for (int i = 1; i < arr.size(); i++) {
-            dfs(root, arr.get(i));
+        nodes.sort((o1, o2) -> {
+            return o2.y - o1.y;
+        });
+        
+        Node root = nodes.get(0);
+        for (int i=1; i<n; i++) {
+            dfs(root, nodes.get(i));
         }
-
-        List<Integer> bfResult = new ArrayList<>();
-        bfIter(bfResult, root);
-        List<Integer> afResult = new ArrayList<>();
-        afIter(afResult, root);
-
-        return new int[][]{
-                bfResult.stream().mapToInt(v -> v).toArray(),
-                afResult.stream().mapToInt(v -> v).toArray()
+        
+        List<Integer> presult = new ArrayList<>();
+        piter(root, presult);
+        List<Integer> aresult = new ArrayList<>();
+        aiter(root, aresult);
+    
+        return new int[][] {
+            presult.stream().mapToInt(i -> i).toArray(),
+            aresult.stream().mapToInt(i -> i).toArray()
         };
     }
-
-    public void bfIter(List<Integer> bfResult, Node node) {
-        bfResult.add(node.num);
+    
+    public void piter(Node node, List<Integer> result) {
+        result.add(node.num);
         if (node.left != null) {
-            bfIter(bfResult, node.left);
+            piter(node.left, result);
         }
         if (node.right != null) {
-            bfIter(bfResult, node.right);
+            piter(node.right, result);
         }
     }
-
-    public void afIter(List<Integer> afResult, Node node) {
+    
+    public void aiter(Node node, List<Integer> result) {
         if (node.left != null) {
-            afIter(afResult, node.left);
+            aiter(node.left, result);
         }
         if (node.right != null) {
-            afIter(afResult, node.right);
+            aiter(node.right, result);
         }
-        afResult.add(node.num);
+        result.add(node.num);
     }
-
-    public void dfs(Node target, Node cur) {
-        if (target.x < cur.x) {
-            if (target.right == null) {
-                target.right = cur;
+    
+    public void dfs(Node node, Node target) {
+        if (node.x > target.x) {
+            if (node.left == null) {
+                node.left = target;
             } else {
-                dfs(target.right, cur);
+                dfs(node.left, target);
             }
         } else {
-            if (target.left == null) {
-                target.left = cur;
+            if (node.right == null) {
+                node.right = target;
             } else {
-                dfs(target.left, cur);
+                dfs(node.right, target);
             }
         }
     }
-
+    
     class Node {
-        int num;
         int x;
         int y;
+        int num;
         Node left;
         Node right;
-
-        public Node(int num, int x, int y, Node left, Node right) {
-            this.num = num;
+        
+        public Node(int x, int y, int num, Node left, Node right) {
             this.x = x;
             this.y = y;
+            this.num = num;
             this.left = left;
             this.right = right;
         }
