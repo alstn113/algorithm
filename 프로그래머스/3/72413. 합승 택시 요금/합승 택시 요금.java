@@ -1,42 +1,49 @@
+import java.util.*;
+
 class Solution {
-
+    
     int INF = (int) 1e9;
-
+    
     public int solution(int n, int s, int a, int b, int[][] fares) {
-        int[][] graph = new int[n + 1][n + 1];
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= n; j++) {
-                if (i != j) {
-                    graph[i][j] = (int) 1e9;
-                }
+        int[][] routes = new int[n+1][n+1];
+        for (int i=0; i<n+1; i++) {
+            Arrays.fill(routes[i], INF);
+        }
+        
+        for (int i=0; i<n+1; i++) {
+            for (int j=0; j<n+1; j++) {
+                if (i == j) routes[i][j] = 0;
             }
         }
-
+        
         for (int[] fare : fares) {
-            int from = fare[0];
-            int to = fare[1];
-            int weight = fare[2];
-
-            graph[from][to] = weight;
-            graph[to][from] = weight;
+            int af = fare[0];
+            int bf = fare[1];
+            int cost = fare[2];
+            
+            routes[af][bf] = cost;
+            routes[bf][af] = cost;
         }
-
-        for (int k = 1; k <= n; k++) {
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    graph[i][j] = Math.min(graph[i][j], graph[i][k] + graph[k][j]);
+        
+        for (int k=1; k<n+1; k++) {
+            for (int i=1; i<n+1; i++) {
+                for (int j=1; j<n+1; j++) {
+                    routes[i][j] = Math.min(routes[i][j], routes[i][k] + routes[k][j]);
                 }
             }
         }
-
-        int min = (int) 1e9;
-        for (int i = 1; i <= n; i++) {
-            if (graph[i][s] == INF || graph[i][a] == INF || graph[i][b] == INF) {
-                continue;
-            }
-            min = Math.min(min, graph[i][s] + graph[i][a] + graph[i][b]);
+        
+        int result = INF;
+        for (int i=1; i<n+1; i++) {
+            int sc = routes[i][s];
+            int ac = routes[i][a];
+            int bc = routes[i][b];
+            if (sc == INF || ac == INF || bc == INF) continue;
+            
+            int cost = sc + ac + bc;
+            result = Math.min(result, cost);
         }
-
-        return min;
+        
+        return result;
     }
 }
