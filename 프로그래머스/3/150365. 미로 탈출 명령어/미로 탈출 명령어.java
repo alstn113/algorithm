@@ -34,9 +34,7 @@ class Solution {
             int newCnt = cnt - 1;
 
             if (cnt == 0 && cx == r && cy == c) {
-                String s = node.s;
-                result.add(s);
-                continue;
+                return node.s;
             }
 
             for (int i = 0; i < 4; i++) {
@@ -57,8 +55,7 @@ class Solution {
             }
         }
 
-        result.sort((o1, o2) -> o1.compareTo(o2));
-        return result.get(0);
+        return "impossible";
     }
 
     class Node {
