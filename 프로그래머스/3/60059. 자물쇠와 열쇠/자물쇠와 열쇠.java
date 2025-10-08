@@ -1,65 +1,70 @@
+import java.util.*;
+
 class Solution {
-
-    // key 관련
-    int n;
-    int m;
-
+    
+    int M;
+    int N;
+    
     public boolean solution(int[][] key, int[][] lock) {
-        n = key.length;
-        m = key[0].length;
-
-        for (int c = 0; c < 4; c++) {
-            // xy offset 구하기
-            for (int i = -n + 1; i <= lock.length - 1; i++) {
-                for (int j = -m + 1; j <= lock[0].length - 1; j++) {
-
-                    boolean flag = false;
-                    for (int x = 0; x < lock.length; x++) {
-                        for (int y = 0; y < lock[0].length; y++) {
-                            int keyValue = 0;
-                            if (x - i >= 0 && x - i < n && y - j >= 0 && y - j < m) {
-                                keyValue = key[x - i][y - j];
-                            }
-
-                            if (lock[x][y] + keyValue != 1) {
-                                flag = true;
-                                break;
-                            }
-                        }
-                        if (flag) {
-                            break;
-                        }
-                    }
-
-                    if (!flag) {
+        M = key.length;
+        N = lock.length;
+        
+        boolean answer = false;
+        
+        for (int q=0; q<4; q++) {
+            // xofs는 열, yofs는 행
+            // 2 ~ -2
+            for (int xofs=-N; xofs<=M; xofs++) {
+                for (int yofs=-N; yofs<=M; yofs++) {
+                    if(check(xofs, yofs, key, lock)) {
                         return true;
                     }
                 }
             }
-
+            
             // 회전
             key = rotate(key);
         }
-
+        
         return false;
     }
-
+    
+    public boolean check(int xofs, int yofs, int[][] key, int[][] lock) {
+        for (int i=0; i<N; i++) {
+            for (int j=0; j<N; j++) {
+                int v = 0;
+                if (i + yofs >= 0 && i + yofs < M && j + xofs >= 0 && j + xofs < M) {
+                    v = key[i + yofs][j + xofs];
+                }
+                
+                if (lock[i][j] + v != 1) {
+                    return false;
+                }                
+            }
+        }
+        
+        return true;
+    }
+    
     public int[][] rotate(int[][] key) {
-        int[][] map = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                map[i][j] = key[j][i];
+        int[][] newKey = new int[M][M];
+        
+        // 대각선 대칭
+        for (int i=0; i<M; i++) {
+            for (int j=0; j<M; j++) {
+                newKey[j][i] = key[i][j];
             }
         }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m / 2; j++) {
-                int temp = map[i][j];
-                map[i][j] = map[i][m - 1 - j];
-                map[i][m - 1 - j] = temp;
+        
+        // 대칭
+        for (int i=0; i<M; i++) {
+            for (int j=0; j<M/2; j++) {
+                int tmp = newKey[i][j];
+                newKey[i][j] = newKey[i][M-1-j];
+                newKey[i][M-1-j] = tmp;
             }
         }
-
-        return map;
+        
+        return newKey;
     }
 }
