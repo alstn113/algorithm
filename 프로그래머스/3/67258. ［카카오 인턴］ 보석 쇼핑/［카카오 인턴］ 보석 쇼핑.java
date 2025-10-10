@@ -2,47 +2,41 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] gems) {
-        // 가장 짧은 구간을 찾기. 
-        // but 짧은게 여러 개라면 앞 번호를 찾기.
-        // 같지 않고 보다 큰 값이 나오면 갱신하면 됨.
+      Set<String> kinds = new HashSet<>(Arrays.asList(gems));
+        int totalKinds = kinds.size();
         
-        Map<String, Integer> map = new HashMap<>();
-        for (String gem : gems) {
-            map.put(gem, 0);
-        }
-        int typeCnt = map.size();
-        int n = gems.length;
+        Map<String, Integer> count = new HashMap<>();
+        int left = 0;
+        int bestLeft = 0;
+        int bestRight = gems.length - 1;
+        int bestLen = Integer.MAX_VALUE;
         
-        int curCnt = 0;
-        
-        int left1 = 0;
-        int right1 = n-1;
-
-        int right = -1;
-        for (int left=0; left<n; left++) {
-            while(right < n-1 && curCnt != typeCnt) {
-                right += 1;
-                String curGem = gems[right];
-                if (map.get(curGem) == 0) {
-                    curCnt += 1;
-                }
-                map.put(curGem, map.get(curGem) + 1);
-            }
+        for (int right = 0; right < gems.length; right++) {
+            String gr = gems[right];
+            count.merge(gr, 1, Integer::sum);
             
-            if (curCnt == typeCnt) {
-                if (right1 - left1 > right - left) {
-                    left1 = left;
-                    right1 = right;
+            while (count.size() == totalKinds) {
+                int currLen = right - left + 1;
+                if (currLen < bestLen) {
+                    bestLen = currLen;
+                    bestLeft = left;
+                    bestRight = right;
                 }
+                
+                String gl = gems[left];
+                int c = count.get(gl) - 1;
+                if (c == 0) {
+                    count.remove(gl);
+                } else {
+                    count.put(gl, c);
+                }
+                left++;
             }
-            
-            String v = gems[left];
-            if(map.get(v) == 1) {
-                curCnt -= 1;
-            }
-            map.put(v, map.get(v) - 1);
         }
         
-        return new int[] {left1 + 1, right1 + 1};
+        int[] answer = new int[2];
+        answer[0] = bestLeft + 1;
+        answer[1] = bestRight + 1;
+        return answer;
     }
 }
