@@ -1,5 +1,6 @@
 package kakao.s4;
 
+// https://github.com/copilot/c/aac2888b-20dd-464f-8096-bf13920ef6b0
 public class Problem4 {
     public int solution(int n, int infection, int[][] edges, int k) {
         return 0;

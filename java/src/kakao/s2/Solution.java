@@ -10,7 +10,7 @@ public class Solution {
         for (int i = 0; i < signals.length; i++) {
             int v = Arrays.stream(signals[i]).sum();
             arr[i] = v;
-            n = lcd(v, n);
+            n = lcm(v, n);
         }
 
         int answer = -1;
@@ -32,7 +32,7 @@ public class Solution {
         return answer;
     }
 
-    public int lcd(int n, int m) {
+    public int lcm(int n, int m) {
         if (n > m) {
             return (n * m) / gcd(n, m);
         }
