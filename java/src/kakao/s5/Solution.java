@@ -1,12 +1,12 @@
 package kakao.s5;
 
-public class Problem5 {
+public class Solution {
     public int[][] solution(int[][] board, int[][] commands) {
         return null;
     }
 
     public static void main(String[] args) {
-        Problem5 p = new Problem5();
+        Solution p = new Solution();
         int[][] test1 = p.solution(
                 new int[][]{
                         {0, 2, 2, 0, 0, 0, 0, 0},
