@@ -16,58 +16,53 @@ public class Solution {
             Arrays.fill(arr[i], -1);
         }
 
-        int start = 0;
-        boolean flag = false;
-        for (int i = 0; i < n; i++) {
-            if (!flag && message.charAt(i) != ' ') {
-                start = i;
-                flag = true;
+        int idx = 0;
+        while (idx < n) {
+            if (message.charAt(idx) == ' ') {
+                idx += 1;
                 continue;
             }
 
-            if (flag && message.charAt(i) == ' ') {
-                flag = false;
+            int start = idx;
+            while (idx < n && message.charAt(idx) != ' ') {
+                idx += 1;
+            }
 
-                for (int j = start; j < i; j++) {
-                    arr[j] = new int[]{start, i - 1};
-                }
-                map1.merge(message.substring(start, i), 1, Integer::sum);
+            for (int j = start; j < idx; j++) {
+                arr[j] = new int[]{start, idx - 1};
             }
-        }
-        if (flag) {
-            for (int j = start; j < n; j++) {
-                arr[j] = new int[]{start, n - 1};
-            }
-            map1.merge(message.substring(start, n), 1, Integer::sum);
+
+            map1.merge(message.substring(start, idx), 1, Integer::sum);
         }
 
         for (int[] sr : spoiler_ranges) {
             int s = sr[0];
             int e = sr[1];
 
-            boolean f = false;
+            boolean seen = false;
             for (int i = s; i <= e; i++) {
                 if (message.charAt(i) != ' ') {
-                    if (!f) {
-                        f = true;
+                    if (!seen) {
+                        seen = true;
                         int[] target = arr[i];
                         int s1 = target[0];
                         int s2 = target[1];
                         map2.merge(message.substring(s1, s2 + 1), 1, Integer::sum);
                     }
                 } else {
-                    f = false;
+                    seen = false;
                 }
             }
         }
 
         int answer = 0;
         for (Map.Entry<String, Integer> entry : map2.entrySet()) {
-            String target = entry.getKey();
-            if (map1.getOrDefault(target, 0) > entry.getValue()) {
-                continue;
+            int total = map1.getOrDefault(entry.getKey(), 0);
+            int spoiled = entry.getValue();
+
+            if (total == spoiled) {
+                answer += 1;
             }
-            answer += 1;
         }
 
         return answer;
