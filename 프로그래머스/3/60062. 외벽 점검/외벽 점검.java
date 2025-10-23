@@ -15,7 +15,6 @@ class Solution {
             weak2[i+weak.length] = weak[i] + n;
         }
         
-        int wLen = weak2.length;
         int answer = INF;
         
         for (List<Integer> p : perm) {
@@ -26,12 +25,11 @@ class Solution {
                 while (w < weak.length && dpoint < p.size()) {
                     int d = weak2[i+w] + p.get(dpoint);
                     w += 1;
+                    dpoint += 1;
                     
                     while (w < weak.length && weak2[i+w] <= d) {
                         w += 1;
                     }
-                    
-                    dpoint += 1;
                 }
                 
                 if (w == weak.length) {
