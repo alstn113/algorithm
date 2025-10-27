@@ -30,7 +30,7 @@ public class 다익스트라 {
             {4, 2, 3},
     };
 
-    static List<List<Node>> graph = new ArrayList<>();
+    static List<List<int[]>> graph = new ArrayList<>();
     static int[] distance = new int[N + 1];
 
     public static void main(String[] args) {
@@ -48,7 +48,7 @@ public class 다익스트라 {
             int end = input[i][1];
             int distance = input[i][2];
 
-            graph.get(start).add(new Node(end, distance));
+            graph.get(start).add(new int[]{end, distance});
         }
 
         // 다익스트라 알고리즘 수행
@@ -65,49 +65,30 @@ public class 다익스트라 {
     }
 
     public static void dijkstra(int start) {
-        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.getDistance() - o2.getDistance());
-        pq.offer(new Node(start, 0));
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
+        pq.offer(new int[]{start, 0});
 
         distance[start] = 0;
 
         while (!pq.isEmpty()) {
-            Node node = pq.poll();
-            int dist = node.getDistance();
-            int now = node.getNode();
+            int[] cur = pq.poll();
+            int now = cur[0];
+            int dist = cur[1];
 
             if (distance[now] < dist) {
                 continue;
             }
 
             // 현재 노드와 연결된 다른 인접한 노드들을 확인
-            for (Node nd : graph.get(now)) {
-                int cost = dist + nd.getDistance();
+            for (int[] node : graph.get(now)) {
+                int cost = dist + node[1];
 
                 // 현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧은 경우
-                if (cost < distance[nd.getNode()]) {
-                    distance[nd.getNode()] = cost;
-                    pq.offer(new Node(nd.getNode(), cost));
+                if (cost < distance[node[0]]) {
+                    distance[node[0]] = cost;
+                    pq.offer(new int[]{node[0], cost});
                 }
             }
         }
-    }
-}
-
-class Node {
-
-    private final int node;
-    private final int distance;
-
-    public Node(int node, int distance) {
-        this.node = node;
-        this.distance = distance;
-    }
-
-    public int getNode() {
-        return node;
-    }
-
-    public int getDistance() {
-        return distance;
     }
 }

@@ -12,6 +12,7 @@ public class 만족하는_최솟값 {
 
         while (start <= end) {
             int mid = (start + end) / 2;
+            // 숙련도(mid)가 증가하면 시간이 적게 걸림. 그러므로 limit의 이하이면서 최대값을 구하는 과정
             if (calcTime(diffs, times, mid) <= limit) {
                 end = mid - 1;
             } else {

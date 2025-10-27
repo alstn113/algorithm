@@ -9,7 +9,7 @@ import java.util.*;
 // 장정: 슬라이딩 윈도우 범위에서 최댓값 또는 최솟값을 빠르게 구해야할 때
 public class 모노톤_큐 {
     public int solution(int[] stones, int k) {
-        Deque<Integer> deque = new LinkedList<>();
+        Deque<Integer> deque = new ArrayDeque<>();
         int answer = (int) 1e9;
 
         for (int i = 0; i < stones.length; i++) {

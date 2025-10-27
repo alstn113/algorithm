@@ -1,55 +1,34 @@
 package kakao.s3;
 
-import java.util.TreeMap;
-
-// 분배 노드는 자식 노드를 2개 또는 3개 가진다.
-// 같은 깊이의 분배 노드는 동일한 자식 수를 가진다. - 분배 노드 또는 리프 노드가 될 수 있음.
-
 public class Solution {
 
     public int solution(int dist_limit, int split_limit) {
-        if (dist_limit == 0) {
-            return 1;
-        }
+        int dist = 1;
+        int sum = 1;
+        int curLeaf = 1;
 
-        TreeMap<Long, Long> leafCounts = new TreeMap<>(); // 분배도 - 리프 노드 수
+        while (dist_limit > 0) {
+            int ables = Math.min(curLeaf, dist_limit);
+            dist_limit -= ables;
 
-        long totalLeaves = 1L;
-        leafCounts.put(1L, 1L);
+            boolean can3to3 = dist * 9 <= split_limit;
+            boolean can2to3 = dist * 6 <= split_limit;
+            boolean can3 = dist * 3 <= split_limit;
+            boolean can2 = dist * 2 <= split_limit;
+            boolean isCritical = can2 && can2to3 && !can3to3;
 
-        long distNodesLeft = dist_limit;
-
-        while (distNodesLeft > 0 && !leafCounts.isEmpty()) {
-            long currentSplit = leafCounts.firstKey(); // 분배도
-            long numLeaves = leafCounts.remove(currentSplit);
-
-            long nodesToExpand = Math.min(numLeaves, distNodesLeft);
-
-            if (numLeaves > nodesToExpand) {
-                leafCounts.put(currentSplit, numLeaves - nodesToExpand);
-            }
-
-            boolean can3split = (currentSplit * 3 <= split_limit);
-            boolean can2split = (currentSplit * 2 <= split_limit);
-
-            boolean isCritical =
-                    can2split && (currentSplit * 2 * 3 <= split_limit) && (currentSplit * 3 * 3 > split_limit);
-
-            if (can3split && !isCritical) {
-                totalLeaves += 2 * nodesToExpand;
-                distNodesLeft -= nodesToExpand;
-                leafCounts.merge(currentSplit * 3, 3 * nodesToExpand, Long::sum);
-            } else if (can2split) {
-                totalLeaves += nodesToExpand;
-                distNodesLeft -= nodesToExpand;
-                leafCounts.merge(currentSplit * 2, 2 * nodesToExpand, Long::sum);
-            } else {
-                leafCounts.merge(currentSplit, nodesToExpand, Long::sum);
-                break;
+            if (can3 && !isCritical) {
+                sum += 2 * ables;
+                curLeaf = ables * 3;
+                dist = dist * 3;
+            } else if (can2) {
+                sum += ables;
+                curLeaf = ables * 2;
+                dist = dist * 2;
             }
         }
 
-        return (int) totalLeaves;
+        return sum;
     }
 
     public static void main(String[] args) {

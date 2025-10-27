@@ -13,7 +13,7 @@ public class 최대공약수_최소공배수 {
         System.out.println("최소공배수: " + lcm);
     }
 
-    // 최대공약수
+    // 최대공약수 (Greatest Common Divisor)
     public static int gcd(int n, int m) {
         if (m == 0) {
             return n;
@@ -24,7 +24,7 @@ public class 최대공약수_최소공배수 {
         return gcd(n, m % n);
     }
 
-    // 최소공배수
+    // 최소공배수 (Least Common Multiple)
     public static int lcm(int n, int m) {
         return (n * m) / gcd(n, m);
     }
